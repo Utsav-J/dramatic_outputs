@@ -2,6 +2,35 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:image_picker/image_picker.dart';
 
+Future<void> _sendImageToApi(File imageFile) async {
+  final dio = Dio();
+
+  // Form the data
+  final formData = FormData.fromMap({
+    'imagefile': await MultipartFile.fromFile(imageFile.path),
+  });
+
+  try {
+    final response = await dio.post(
+      'https://yourapi.com/upload', // Replace with your API URL
+      data: formData,
+      options: Options(
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      ),
+    );
+
+    if (response.statusCode == 200) {
+      print('Image uploaded successfully');
+    } else {
+      print('Failed to upload image: ${response.statusCode}');
+    }
+  } catch (e) {
+    print('Error: $e');
+  }
+}
+
 Future<void> uploadImage(File imageFile) async {
   final dio = Dio();
   String url =

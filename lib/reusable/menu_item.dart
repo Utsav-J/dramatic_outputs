@@ -18,7 +18,7 @@ class MenuItem extends StatelessWidget {
     return ListTile(
       leading: icon,
       title: Text(title),
-      onTap: onTap,
+      onLongPress: onTap,
     );
   }
 }

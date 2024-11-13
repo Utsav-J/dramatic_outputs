@@ -1,16 +1,49 @@
+import 'package:dio/dio.dart';
 import 'package:dramatic_outputs/reusable/image_rounded_rect.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 
 class ImagePickerColumn extends StatefulWidget {
+  const ImagePickerColumn({super.key});
   @override
-  _ImagePickerColumnState createState() => _ImagePickerColumnState();
+  ImagePickerColumnState createState() => ImagePickerColumnState();
 }
 
-class _ImagePickerColumnState extends State<ImagePickerColumn> {
+class ImagePickerColumnState extends State<ImagePickerColumn> {
   File? _image;
-  // String? _labels; // To store the response labels
+
+  Future<void> _sendImageToApi(File? imageFile) async {
+    final dio = Dio();
+    if (imageFile == null) {
+      return;
+    } else {
+      final formData = FormData.fromMap({
+        'imagefile': await MultipartFile.fromFile(imageFile.path),
+      });
+
+      try {
+        final response = await dio.post(
+          'https://yourapi.com/upload', // Replace with your API URL
+          data: formData,
+          options: Options(
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
+          ),
+        );
+
+        if (response.statusCode == 200) {
+          print('Image uploaded successfully');
+        } else {
+          print('Failed to upload image: ${response.statusCode}');
+        }
+      } catch (e) {
+        print('Error: $e');
+      }
+    }
+    // Form the data
+  }
 
   Future<void> _pickImage() async {
     final pickedFile =
@@ -19,41 +52,9 @@ class _ImagePickerColumnState extends State<ImagePickerColumn> {
     if (pickedFile != null) {
       setState(() {
         _image = File(pickedFile.path);
-        // _labels = null; // Reset labels when a new image is selected
       });
-      // await _uploadImage(_image!); // Upload the selected image
     }
   }
-
-  // Future<void> _uploadImage(File imageFile) async {
-  //   final dio = Dio();
-  //   const String url =
-  //       'http://localhost:5000/process_image'; // Use your server IP if testing on a real device
-
-  //   try {
-  //     FormData formData = FormData.fromMap({
-  //       'image': await MultipartFile.fromFile(imageFile.path,
-  //           filename: 'selected_image.jpg'),
-  //     });
-
-  //     Response response = await dio.post(url, data: formData);
-
-  //     if (response.statusCode == 200) {
-  //       setState(() {
-  //         _labels =
-  //             response.data.toString(); // Update the labels with response data
-  //       });
-  //     } else {
-  //       setState(() {
-  //         _labels = 'Error: ${response.statusMessage}';
-  //       });
-  //     }
-  //   } catch (e) {
-  //     setState(() {
-  //       _labels = 'Failed to upload image: $e';
-  //     });
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -67,21 +68,9 @@ class _ImagePickerColumnState extends State<ImagePickerColumn> {
               onTap: _pickImage,
               child: ImageRoundedRect(
                 image: _image,
+                callbackFunction: _sendImageToApi(_image),
               )),
           const SizedBox(height: 20),
-
-          // ClipRRect(
-          //   borderRadius: BorderRadius.circular(25),
-          //   child: _labels == null
-          //       ? const Text(
-          //           'No image selected.',
-          //           style: TextStyle(color: Colors.white),
-          //         )
-          //       : Text(
-          //           'Labels: $_labels',
-          //           style: const TextStyle(color: Colors.white),
-          //         ),
-          // ),
         ],
       ),
     );
