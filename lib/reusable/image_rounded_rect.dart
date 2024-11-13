@@ -1,12 +1,14 @@
 import 'dart:io';
 
+import 'package:dramatic_outputs/static/static_variables.dart';
+import 'package:dramatic_outputs/utils/util_functions.dart';
 import 'package:flutter/material.dart';
 
 class ImageRoundedRect extends StatelessWidget {
   const ImageRoundedRect(
-      {super.key, required this.image, required this.callbackFunction});
+      {super.key, required this.image, required this.onCheckPressed});
   final File? image;
-  final Future<void>? callbackFunction;
+  final VoidCallback onCheckPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +39,7 @@ class ImageRoundedRect extends StatelessWidget {
                 bottom: 8,
                 right: 15,
                 child: GestureDetector(
-                  onTap: () {},
+                  onTap: onCheckPressed,
                   child: Container(
                     padding: const EdgeInsets.all(15),
                     decoration: BoxDecoration(

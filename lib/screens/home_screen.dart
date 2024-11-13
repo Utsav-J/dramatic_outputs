@@ -2,7 +2,9 @@ import 'package:dramatic_outputs/reusable/home_screen_drawer.dart';
 import 'package:dramatic_outputs/reusable/image_picker_column.dart';
 import 'package:dramatic_outputs/reusable/image_view.dart';
 import 'package:dramatic_outputs/reusable/label_picker.dart';
+import 'package:dramatic_outputs/static/static_variables.dart';
 import 'package:dramatic_outputs/utils/random_image_request.dart';
+import 'package:dramatic_outputs/utils/util_functions.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -14,6 +16,15 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   Future<Image>? randomImageFuture;
+  List<String> uniqueLabels = [];
+
+  void updateLabels() {
+    setState(() {
+      uniqueLabels =
+          UtilFunctions.extractLabelsFromJson(StaticVariables.exampleJsonData);
+    });
+  }
+
   void handleLabelTap() {
     setState(() {
       randomImageFuture = generateRandomImage();
@@ -34,8 +45,9 @@ class _HomeScreenState extends State<HomeScreen> {
         body: SingleChildScrollView(
           child: Column(
             children: [
-              ImagePickerColumn(),
+              ImagePickerColumn(onCheckPressed: updateLabels),
               LabelPicker(
+                uniqueLabels: uniqueLabels,
                 onLabelTap: handleLabelTap,
               ),
               const Padding(

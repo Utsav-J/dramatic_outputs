@@ -5,7 +5,8 @@ import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 
 class ImagePickerColumn extends StatefulWidget {
-  const ImagePickerColumn({super.key});
+  const ImagePickerColumn({super.key, required this.onCheckPressed});
+  final VoidCallback onCheckPressed;
   @override
   ImagePickerColumnState createState() => ImagePickerColumnState();
 }
@@ -68,7 +69,7 @@ class ImagePickerColumnState extends State<ImagePickerColumn> {
               onTap: _pickImage,
               child: ImageRoundedRect(
                 image: _image,
-                callbackFunction: _sendImageToApi(_image),
+                onCheckPressed: widget.onCheckPressed,
               )),
           const SizedBox(height: 20),
         ],
