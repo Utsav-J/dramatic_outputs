@@ -1,3 +1,4 @@
+import 'package:dramatic_outputs/utils/pop_up_form.dart';
 import 'package:flutter/material.dart';
 
 class FeedbackButton extends StatelessWidget {
@@ -12,15 +13,21 @@ class FeedbackButton extends StatelessWidget {
     print("Good");
   }
 
-  void handleDislike() {
-    print("Bad");
+  void handleDislike(BuildContext context) {
+    PopUpForm.showFormDialog(context);
     // Define what happens when the button is pressed
   }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: isLike ? handleLike : handleDislike,
+      onTap: isLike
+          ? () {
+              handleLike();
+            }
+          : () {
+              handleDislike(context);
+            },
       child: Row(
         children: [
           isLike

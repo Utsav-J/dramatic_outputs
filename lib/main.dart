@@ -1,15 +1,21 @@
+import 'package:dramatic_outputs/firebase_options.dart';
 import 'package:dramatic_outputs/routes/routes.dart';
 import 'package:dramatic_outputs/screens/home_screen.dart';
 import 'package:dramatic_outputs/screens/onboarding_screen.dart';
 import 'package:dramatic_outputs/static/static_variables.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 bool isOnboardingDone = false;
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   final prefs = await SharedPreferences.getInstance();
   isOnboardingDone = prefs.getBool('isOnboardingDone') ?? false;
   runApp(const MyApp());

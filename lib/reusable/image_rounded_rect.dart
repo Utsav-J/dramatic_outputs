@@ -1,7 +1,4 @@
 import 'dart:io';
-
-import 'package:dramatic_outputs/static/static_variables.dart';
-import 'package:dramatic_outputs/utils/util_functions.dart';
 import 'package:flutter/material.dart';
 
 class ImageRoundedRect extends StatelessWidget {
