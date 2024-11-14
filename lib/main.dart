@@ -39,14 +39,15 @@ class MyApp extends StatelessWidget {
             useMaterial3: true,
             appBarTheme:
                 const AppBarTheme(color: Color.fromRGBO(30, 55, 76, 1)),
-            scaffoldBackgroundColor: Color.fromRGBO(23, 42, 58, 1),
+            scaffoldBackgroundColor: const Color.fromRGBO(23, 42, 58, 1),
           ),
           home: isOnboardingDone
               ? const HomeScreen()
               : OnboardingPage(
                   callback: () {
                     Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => HomeScreen()),
+                      MaterialPageRoute(
+                          builder: (context) => const HomeScreen()),
                     );
                   },
                   pages: StaticVariables.pages,

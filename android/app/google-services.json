@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "1061320534593",
+    "firebase_url": "https://dramatic-outputs-default-rtdb.asia-southeast1.firebasedatabase.app",
     "project_id": "dramatic-outputs",
     "storage_bucket": "dramatic-outputs.firebasestorage.app"
   },
