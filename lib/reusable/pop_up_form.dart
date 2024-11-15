@@ -17,6 +17,8 @@ class PopUpForm {
       app: Firebase.app(),
       databaseURL:
           "https://dramatic-outputs-default-rtdb.asia-southeast1.firebasedatabase.app/");
+  static final _feedbackRef = _database.ref("feedbacks");
+  static final _feedbackCount = _database.ref("feedbackCount");
   static Set<String> selectedItems = {};
   static TextEditingController emailController = TextEditingController();
   static TextEditingController additionalCommentsController =
@@ -40,7 +42,7 @@ class PopUpForm {
     );
 
     try {
-      await _database.ref(feedbackId).set(feedback.toMap());
+      await _feedbackRef.child(feedbackId).set(feedback.toMap());
       print("Feedback submitted successfully");
     } catch (e) {
       print("Error: $e");
