@@ -63,10 +63,14 @@ class PopUpForm {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
+          backgroundColor: const Color.fromRGBO(30, 55, 76, 1),
           title: const Center(
             child: Text(
               "Help us improve 🫶",
-              style: TextStyle(fontWeight: FontWeight.w500),
+              style: TextStyle(
+                fontWeight: FontWeight.w500,
+                color: Colors.white,
+              ),
             ),
           ),
           content: SingleChildScrollView(
@@ -78,15 +82,21 @@ class PopUpForm {
                 children: [
                   const SizedBox(height: 8),
                   TextFormField(
+                    style: const TextStyle(color: Colors.white),
+                    cursorColor: Colors.white,
                     validator: validateEmail,
                     controller: emailController,
+                    cursorErrorColor: const Color.fromARGB(255, 245, 134, 126),
                     decoration: InputDecoration(
                       labelText: "Email",
+                      labelStyle: TextStyle(color: Colors.grey.shade300),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(15),
                       ),
                       hintText: "abc@example.com",
-                      hintStyle: const TextStyle(color: Colors.grey),
+                      hintStyle: TextStyle(
+                        color: Colors.grey.shade300,
+                      ),
                     ),
                   ),
                   const SizedBox(height: 16),
@@ -95,6 +105,7 @@ class PopUpForm {
                     "Select all that apply:",
                     style: TextStyle(
                       fontSize: 18,
+                      color: Colors.white,
                       fontWeight: FontWeight.w400,
                     ),
                   ),
@@ -116,31 +127,35 @@ class PopUpForm {
                           (context as Element).markNeedsBuild();
                         },
                         selectedColor: Colors.blue.shade200,
-                        backgroundColor: Colors.grey.shade300,
+                        backgroundColor: Colors.grey.shade400,
                         labelStyle: TextStyle(
                           color:
-                              isSelected ? Colors.black : Colors.grey.shade600,
+                              isSelected ? Colors.black : Colors.grey.shade800,
                         ),
                       );
                     }).toList(),
                   ),
                   if (selectedItems.isEmpty)
-                    const Padding(
-                      padding: EdgeInsets.only(top: 8.0),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 8.0),
                       child: Text(
                         'Please select at least one option.',
-                        style: TextStyle(color: Colors.red),
+                        style: TextStyle(
+                            color: const Color.fromARGB(255, 245, 134, 126)
+                                .withOpacity(0.7)),
                       ),
                     ),
                   const SizedBox(height: 16),
                   TextFormField(
+                    style: const TextStyle(color: Colors.white),
+                    cursorColor: Colors.white,
                     controller: additionalCommentsController,
                     minLines: 2,
                     maxLines: 6,
                     decoration: InputDecoration(
                       hintText: "Additional comments...",
                       hintStyle: const TextStyle(
-                        color: Colors.grey,
+                        color: Color.fromARGB(255, 125, 124, 124),
                       ),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(15),
@@ -153,15 +168,19 @@ class PopUpForm {
           ),
           actions: <Widget>[
             // Cancel Button
-            TextButton(
+            ElevatedButton(
+              style: const ButtonStyle(
+                backgroundColor:
+                    WidgetStatePropertyAll(Color.fromRGBO(23, 42, 58, 1)),
+              ),
               child: const Text("Cancel"),
               onPressed: () {
                 Navigator.of(context).pop();
               },
             ),
             // Submit Button
-            TextButton(
-              child: const Text("Submit Feedback "),
+            ElevatedButton(
+              child: const Text("Submit"),
               onPressed: () {
                 if (_formKey.currentState!.validate() &&
                     selectedItems.isNotEmpty) {
