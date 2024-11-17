@@ -1,9 +1,10 @@
 import 'dart:io';
-import 'package:dramatic_outputs/reusable/captionText.dart';
-import 'package:dramatic_outputs/reusable/home_screen_drawer.dart';
-import 'package:dramatic_outputs/reusable/image_picker_column.dart';
-import 'package:dramatic_outputs/reusable/image_view.dart';
-import 'package:dramatic_outputs/reusable/label_picker.dart';
+import 'dart:typed_data';
+import 'package:dramatic_outputs/reusable/homescreen/captionText.dart';
+import 'package:dramatic_outputs/reusable/homescreen/home_screen_drawer.dart';
+import 'package:dramatic_outputs/reusable/homescreen/image_picker_column.dart';
+import 'package:dramatic_outputs/reusable/output/image_view.dart';
+import 'package:dramatic_outputs/reusable/homescreen/label_picker.dart';
 import 'package:dramatic_outputs/utils/api_functions.dart';
 import 'package:dramatic_outputs/utils/random_image_request.dart';
 import 'package:dramatic_outputs/utils/util_functions.dart';
@@ -57,7 +58,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void handleLabelTap() {
     setState(() {
-      randomImageFuture = generateRandomImage();
+      // randomImageFuture = generateRandomImage();
     });
   }
 
@@ -105,26 +106,29 @@ class _HomeScreenState extends State<HomeScreen> {
                   : CaptionString(
                       caption: UtilFunctions.extractImageCaption(response),
                     ),
-              FutureBuilder<Image?>(
-                future: randomImageFuture,
+              FutureBuilder<Map<String, dynamic>>(
+                future: generateRandomImage(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const CircularProgressIndicator(
-                      color: Colors.white,
-                    );
+                    return const CircularProgressIndicator(color: Colors.white);
                   } else if (snapshot.hasError) {
                     return const Text(
                       'Error loading image',
                       style: TextStyle(color: Colors.white),
                     );
                   } else if (snapshot.hasData) {
-                    return ImageView(imagePath: snapshot.data!);
+                    final image = snapshot.data!["image"] as Image;
+                    final imageData = snapshot.data!["data"] as Uint8List;
+                    return ImageView(imagePath: image, imageData: imageData);
                   } else {
-                    return const Text('Tap a label to generate an image',
-                        style: TextStyle(color: Colors.white));
+                    return const Text(
+                      'No image available',
+                      style: TextStyle(color: Colors.white),
+                    );
                   }
                 },
-              )
+              ),
+              IconButton(onPressed: handleLabelTap, icon: Icon(Icons.save))
             ],
           ),
         ));

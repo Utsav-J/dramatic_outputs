@@ -1,3 +1,8 @@
+import 'dart:io';
+import 'dart:typed_data';
+
+import 'package:flutter/material.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:uuid/uuid.dart';
 
 class UtilFunctions {
@@ -25,5 +30,26 @@ class UtilFunctions {
     String feedbackId = uuid.v4();
     print(feedbackId);
     return feedbackId;
+  }
+
+  static Future<void> handleDownloadImage(
+      Uint8List imageData, BuildContext context) async {
+    try {
+      // Get the application's documents directory to save the image
+      final directory = await getApplicationDocumentsDirectory();
+      final filePath = '${directory.path}/downloaded_image.jpg';
+
+      // Save the image bytes to a file
+      final file = File(filePath);
+      await file.writeAsBytes(imageData);
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Image saved to: $filePath")),
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Download failed: $e")),
+      );
+    }
   }
 }

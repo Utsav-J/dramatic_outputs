@@ -1,5 +1,4 @@
-import 'package:dio/dio.dart';
-import 'package:dramatic_outputs/reusable/image_rounded_rect.dart';
+import 'package:dramatic_outputs/reusable/homescreen/image_rounded_rect.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';

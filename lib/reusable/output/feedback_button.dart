@@ -1,4 +1,4 @@
-import 'package:dramatic_outputs/reusable/pop_up_form.dart';
+import 'package:dramatic_outputs/reusable/output/pop_up_form.dart';
 import 'package:dramatic_outputs/utils/device_id_manager.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';

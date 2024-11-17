@@ -1,5 +1,5 @@
 import 'package:app_linkster/app_linkster.dart';
-import 'package:dramatic_outputs/reusable/menu_item.dart';
+import 'package:dramatic_outputs/reusable/homescreen/menu_item.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
