@@ -1,8 +1,10 @@
+import 'dart:io';
+import 'package:dramatic_outputs/reusable/captionText.dart';
 import 'package:dramatic_outputs/reusable/home_screen_drawer.dart';
 import 'package:dramatic_outputs/reusable/image_picker_column.dart';
 import 'package:dramatic_outputs/reusable/image_view.dart';
 import 'package:dramatic_outputs/reusable/label_picker.dart';
-import 'package:dramatic_outputs/static/static_variables.dart';
+import 'package:dramatic_outputs/utils/api_functions.dart';
 import 'package:dramatic_outputs/utils/random_image_request.dart';
 import 'package:dramatic_outputs/utils/util_functions.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +12,7 @@ import 'package:flutter/material.dart';
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
   static const routeName = '/home';
+
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
@@ -17,12 +20,39 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   Future<Image>? randomImageFuture;
   List<String> uniqueLabels = [];
+  bool isLoading = false;
+  final response = {};
+  File? selectedImage;
 
-  void updateLabels() {
+  Future<void> updateLabels(File imageFile) async {
     setState(() {
-      uniqueLabels =
-          UtilFunctions.extractLabelsFromJson(StaticVariables.exampleJsonData);
+      isLoading = true;
     });
+
+    try {
+      final apiFunctions = ApiFunctions();
+      final apiResponse = await apiFunctions.getLabelRequest(imageFile);
+      List<String> extractedLabels =
+          UtilFunctions.extractLabelsFromJson(apiResponse);
+
+      setState(() {
+        uniqueLabels = extractedLabels;
+        response.clear();
+        response.addAll(apiResponse);
+        print("Updated response: $response");
+      });
+    } catch (e) {
+      print("Error : $e");
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Failed to fetch labels: $e')),
+        );
+      }
+    } finally {
+      setState(() {
+        isLoading = false;
+      });
+    }
   }
 
   void handleLabelTap() {
@@ -45,14 +75,36 @@ class _HomeScreenState extends State<HomeScreen> {
         body: SingleChildScrollView(
           child: Column(
             children: [
-              ImagePickerColumn(onCheckPressed: updateLabels),
-              LabelPicker(
-                uniqueLabels: uniqueLabels,
-                onLabelTap: handleLabelTap,
-              ),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0),
-              ),
+              ImagePickerColumn(onCheckPressed: () {
+                if (selectedImage != null) {
+                  updateLabels(selectedImage!);
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('Please select an image first!'),
+                    ),
+                  );
+                }
+              }, onImageSelected: (File image) {
+                setState(() {
+                  selectedImage = image;
+                });
+              }),
+              isLoading == true
+                  ? LinearProgressIndicator(
+                      color: const Color.fromARGB(255, 47, 129, 100),
+                      borderRadius: BorderRadius.circular(25),
+                    )
+                  : LabelPicker(
+                      uniqueLabels: uniqueLabels,
+                      onLabelTap: handleLabelTap,
+                    ),
+              const SizedBox(height: 10.0),
+              response.isEmpty
+                  ? const SizedBox()
+                  : CaptionString(
+                      caption: UtilFunctions.extractImageCaption(response),
+                    ),
               FutureBuilder<Image?>(
                 future: randomImageFuture,
                 builder: (context, snapshot) {

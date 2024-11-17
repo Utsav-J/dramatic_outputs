@@ -5,46 +5,16 @@ import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 
 class ImagePickerColumn extends StatefulWidget {
-  const ImagePickerColumn({super.key, required this.onCheckPressed});
+  const ImagePickerColumn(
+      {super.key, required this.onCheckPressed, required this.onImageSelected});
   final VoidCallback onCheckPressed;
+  final Function(File) onImageSelected;
   @override
   ImagePickerColumnState createState() => ImagePickerColumnState();
 }
 
 class ImagePickerColumnState extends State<ImagePickerColumn> {
   File? _image;
-
-  Future<void> _sendImageToApi(File? imageFile) async {
-    final dio = Dio();
-    if (imageFile == null) {
-      return;
-    } else {
-      final formData = FormData.fromMap({
-        'imagefile': await MultipartFile.fromFile(imageFile.path),
-      });
-
-      try {
-        final response = await dio.post(
-          'https://yourapi.com/upload', // Replace with your API URL
-          data: formData,
-          options: Options(
-            headers: {
-              'Content-Type': 'multipart/form-data',
-            },
-          ),
-        );
-
-        if (response.statusCode == 200) {
-          print('Image uploaded successfully');
-        } else {
-          print('Failed to upload image: ${response.statusCode}');
-        }
-      } catch (e) {
-        print('Error: $e');
-      }
-    }
-    // Form the data
-  }
 
   Future<void> _pickImage() async {
     final pickedFile =
@@ -54,13 +24,14 @@ class ImagePickerColumnState extends State<ImagePickerColumn> {
       setState(() {
         _image = File(pickedFile.path);
       });
+      widget.onImageSelected(_image!);
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.stretch,

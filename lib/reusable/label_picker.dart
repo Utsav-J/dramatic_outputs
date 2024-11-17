@@ -37,7 +37,7 @@ class LabelPicker extends StatelessWidget {
                       style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
-                          fontSize: 16.0),
+                          fontSize: 18.0),
                     ),
                   ),
                 );
