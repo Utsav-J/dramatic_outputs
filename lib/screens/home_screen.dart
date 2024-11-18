@@ -19,7 +19,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  Future<Image>? randomImageFuture;
+  Future<Map<String, dynamic>>? randomImageFuture;
   List<String> uniqueLabels = [];
   bool isLoading = false;
   final response = {};
@@ -58,7 +58,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void handleLabelTap() {
     setState(() {
-      // randomImageFuture = generateRandomImage();
+      randomImageFuture = generateRandomImage();
     });
   }
 
@@ -107,10 +107,12 @@ class _HomeScreenState extends State<HomeScreen> {
                       caption: UtilFunctions.extractImageCaption(response),
                     ),
               FutureBuilder<Map<String, dynamic>>(
-                future: generateRandomImage(),
+                future: randomImageFuture,
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const CircularProgressIndicator(color: Colors.white);
+                    return const CircularProgressIndicator(
+                      color: Colors.white,
+                    );
                   } else if (snapshot.hasError) {
                     return const Text(
                       'Error loading image',
@@ -122,13 +124,38 @@ class _HomeScreenState extends State<HomeScreen> {
                     return ImageView(imagePath: image, imageData: imageData);
                   } else {
                     return const Text(
-                      'No image available',
+                      'Press the button to load an image',
                       style: TextStyle(color: Colors.white),
                     );
                   }
                 },
               ),
-              IconButton(onPressed: handleLabelTap, icon: Icon(Icons.save))
+              // FutureBuilder<Map<String, dynamic>>(
+              //   future: generateRandomImage(),
+              //   builder: (context, snapshot) {
+              //     if (snapshot.connectionState == ConnectionState.waiting) {
+              //       return const CircularProgressIndicator(color: Colors.white);
+              //     } else if (snapshot.hasError) {
+              //       return const Text(
+              //         'Error loading image',
+              //         style: TextStyle(color: Colors.white),
+              //       );
+              //     } else if (snapshot.hasData) {
+              //       final image = snapshot.data!["image"] as Image;
+              //       final imageData = snapshot.data!["data"] as Uint8List;
+              //       return ImageView(imagePath: image, imageData: imageData);
+              //     } else {
+              //       return const Text(
+              //         'No image available',
+              //         style: TextStyle(color: Colors.white),
+              //       );
+              //     }
+              //   },
+              // ),
+              IconButton(
+                onPressed: handleLabelTap,
+                icon: Icon(Icons.save),
+              )
             ],
           ),
         ));
