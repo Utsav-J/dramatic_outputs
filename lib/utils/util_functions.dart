@@ -1,8 +1,6 @@
 import 'dart:io';
 import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:uuid/uuid.dart';
 
@@ -33,37 +31,30 @@ class UtilFunctions {
     return feedbackId;
   }
 
-  // static Future<void> handleDownloadImage(
-  //     Uint8List imageData, BuildContext context) async {
-  //   try {
-  //     // Get the application's documents directory to save the image
-  //     final directory = await getApplicationDocumentsDirectory();
-  //     final filePath = '${directory.path}/downloaded_image.jpg';
-
-  //     // Save the image bytes to a file
-  //     final file = File(filePath);
-  //     await file.writeAsBytes(imageData);
-
-  //     ScaffoldMessenger.of(context).showSnackBar(
-  //       SnackBar(content: Text("Image saved to: $filePath")),
-  //     );
-  //   } catch (e) {
-  //     ScaffoldMessenger.of(context).showSnackBar(
-  //       SnackBar(content: Text("Download failed: $e")),
-  //     );
-  //   }
-  // }
-
   static Future<bool> requestStoragePermission() async {
-    // Check for permission status
-    final permissionStatus = await Permission.storage.status;
+    if (Platform.isAndroid) {
+      // Check for storage permission
+      if (await Permission.storage.isGranted) {
+        return true;
+      }
 
-    // If permission is not granted, request it
-    if (!permissionStatus.isGranted) {
-      final result = await Permission.storage.request();
-      return result.isGranted;
+      // For Android 11+ also check manage external storage permission
+      if (await Permission.manageExternalStorage.isGranted) {
+        return true;
+      }
+
+      // Request permissions
+      if (await Permission.storage.request().isGranted) {
+        return true;
+      }
+
+      if (await Permission.manageExternalStorage.request().isGranted) {
+        return true;
+      }
+
+      return false;
     }
-    return true; // Permission is already granted
+    return true;
   }
 
   static Future<void> handleDownloadImage(
@@ -80,37 +71,29 @@ class UtilFunctions {
         }
       }
 
-      // Get the Downloads directory
-      String? downloadsPath;
-      if (Platform.isAndroid) {
-        final directory = await getExternalStorageDirectories(
-          type: StorageDirectory.downloads,
-        );
-        if (directory != null && directory.isNotEmpty) {
-          downloadsPath = directory.first.path;
-        }
-      } else if (Platform.isIOS) {
-        final directory = await getApplicationDocumentsDirectory();
-        downloadsPath =
-            directory.path; // iOS does not have a traditional Downloads folder
-      }
+      // Define the Downloads folder path
+      const downloadsPath = '/storage/emulated/0/Download';
+      DateTime now = DateTime.now();
+      final String formattedTime =
+          "${now.year}-${now.month}-${now.day}_${now.hour}-${now.minute}-${now.second}";
+      final filePath = '$downloadsPath/downloaded_image_$formattedTime.jpg';
 
-      if (downloadsPath == null) {
-        throw Exception("Could not locate the Downloads folder.");
-      }
-
-      // Create the file in the Downloads folder
-      final filePath = '$downloadsPath/downloaded_image.jpg';
+      // Save the file
       final file = File(filePath);
       await file.writeAsBytes(imageData);
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Image saved to Downloads: $filePath")),
-      );
+      print("Image saved to Downloads: $filePath");
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Image saved to Downloads: $filePath")),
+        );
+      }
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Download failed: $e")),
-      );
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Download failed: $e")),
+        );
+      }
     }
   }
 }
