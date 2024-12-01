@@ -19,6 +19,25 @@ class UtilFunctions {
     return uniqueLabels.toList();
   }
 
+  static Map<String, int> extractLabelsWithIndex(
+      Map<String, dynamic> jsonData) {
+    List<dynamic> dynamicLabels =
+        jsonData['json_data']['<CAPTION_TO_PHRASE_GROUNDING>']['labels'];
+    List<String> listOfLabels =
+        dynamicLabels.map((label) => label.toString()).toList();
+
+    Map<String, int> uniqueLabelsWithIndices = {};
+
+    for (int i = 0; i < listOfLabels.length; i++) {
+      if (!uniqueLabelsWithIndices.containsKey(listOfLabels[i])) {
+        uniqueLabelsWithIndices[listOfLabels[i]] =
+            i + 1; // Store 1-indexed position
+      }
+    }
+
+    return uniqueLabelsWithIndices;
+  }
+
   static String extractImageCaption(Map<dynamic, dynamic> jsonData) {
     String imageCaption = jsonData['json_data']['<MORE_DETAILED_CAPTION>'];
     return imageCaption.toString();
@@ -97,5 +116,8 @@ class UtilFunctions {
     }
   }
 
-  
+  static String extractFilenameFromJson(Map<String, dynamic> jsonData) {
+    String filename = jsonData["filename"];
+    return filename;
+  }
 }

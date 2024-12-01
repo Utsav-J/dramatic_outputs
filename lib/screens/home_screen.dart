@@ -21,10 +21,11 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   Future<Map<String, dynamic>>? randomImageFuture;
   List<String> uniqueLabels = [];
+  Map<String, int> extractedLabelsWithIndices = {};
   bool isLoading = false;
   final response = {};
   File? selectedImage;
-
+  String filename = "";
   Future<void> updateLabels(File imageFile) async {
     setState(() {
       isLoading = true;
@@ -33,11 +34,16 @@ class _HomeScreenState extends State<HomeScreen> {
     try {
       final apiFunctions = ApiFunctions();
       final apiResponse = await apiFunctions.getLabelRequest(imageFile);
-      List<String> extractedLabels =
-          UtilFunctions.extractLabelsFromJson(apiResponse);
-
+      // List<String> extractedLabels =
+      //     UtilFunctions.extractLabelsFromJson(apiResponse);
+      extractedLabelsWithIndices =
+          UtilFunctions.extractLabelsWithIndex(apiResponse);
+      List<String> extractedLabels = extractedLabelsWithIndices.keys.toList();
+      String exatractedFilename =
+          UtilFunctions.extractFilenameFromJson(apiResponse);
       setState(() {
         uniqueLabels = extractedLabels;
+        filename = exatractedFilename;
         response.clear();
         response.addAll(apiResponse);
         print("Updated response: $response");
@@ -56,7 +62,14 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  void handleLabelTap() {
+  void handleLabelTap(index) {
+    setState(() {
+      debugPrint("Button pressed for index: $index");
+      // randomImageFuture = generateRandomImage();
+    });
+  }
+
+  void handleLabelTapDebug() {
     setState(() {
       randomImageFuture = generateRandomImage();
     });
@@ -97,7 +110,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       borderRadius: BorderRadius.circular(25),
                     )
                   : LabelPicker(
-                      uniqueLabels: uniqueLabels,
+                      labelsWithIndices: extractedLabelsWithIndices,
                       onLabelTap: handleLabelTap,
                     ),
               const SizedBox(height: 10.0),
@@ -153,7 +166,7 @@ class _HomeScreenState extends State<HomeScreen> {
               //   },
               // ),
               IconButton(
-                onPressed: handleLabelTap,
+                onPressed: handleLabelTapDebug,
                 icon: Icon(Icons.save),
               )
             ],
