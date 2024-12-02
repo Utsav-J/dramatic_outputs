@@ -6,8 +6,11 @@ import 'package:flutter/services.dart';
 import 'package:image/image.dart' as img;
 
 class ImageView extends StatelessWidget {
-  const ImageView(
-      {super.key, required this.imagePath, required this.imageData});
+  const ImageView({
+    super.key,
+    required this.imagePath,
+    required this.imageData,
+  });
   final Image imagePath;
   final Uint8List imageData;
 
@@ -75,20 +78,25 @@ class ImageView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.only(bottom: 16.0),
       margin: const EdgeInsets.all(8.0),
       decoration: BoxDecoration(
         color: Colors.white.withOpacity(0.2),
         borderRadius: BorderRadius.circular(25),
       ),
       child: Column(
+        mainAxisSize: MainAxisSize.min,
+        // crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Stack(
             children: [
               // Draw the image first so the button appears on top
               ClipRRect(
                 borderRadius: BorderRadius.circular(25),
-                child: imagePath,
+                child: SizedBox(
+                  height: 300, // Define a fixed height
+                  width: double.infinity, // Use full width
+                  child: imagePath, // Ensure `imagePath` respects constraints
+                ),
               ),
               // Then, position the button on top of the image
               Positioned(
@@ -118,6 +126,7 @@ class ImageView extends StatelessWidget {
           ),
           const Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               FeedbackButton(
                 isLike: true,

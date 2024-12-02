@@ -1,10 +1,11 @@
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:dramatic_outputs/reusable/homescreen/captionText.dart';
-import 'package:dramatic_outputs/reusable/homescreen/home_screen_drawer.dart';
 import 'package:dramatic_outputs/reusable/homescreen/image_picker_column.dart';
 import 'package:dramatic_outputs/reusable/output/image_view.dart';
+import 'package:dramatic_outputs/reusable/homescreen/home_screen_drawer.dart';
 import 'package:dramatic_outputs/reusable/homescreen/label_picker.dart';
+import 'package:dramatic_outputs/reusable/output/output_image_gallery.dart';
 import 'package:dramatic_outputs/utils/api_functions.dart';
 import 'package:dramatic_outputs/utils/random_image_request.dart';
 import 'package:dramatic_outputs/utils/util_functions.dart';
@@ -23,9 +24,12 @@ class _HomeScreenState extends State<HomeScreen> {
   List<String> uniqueLabels = [];
   Map<String, int> extractedLabelsWithIndices = {};
   bool isLoading = false;
-  final response = {};
+  bool isLoadingOutput = false;
+  Map<String, dynamic> response = {};
   File? selectedImage;
   String filename = "";
+  List<String> outputImages = [];
+
   Future<void> updateLabels(File imageFile) async {
     setState(() {
       isLoading = true;
@@ -39,11 +43,11 @@ class _HomeScreenState extends State<HomeScreen> {
       extractedLabelsWithIndices =
           UtilFunctions.extractLabelsWithIndex(apiResponse);
       List<String> extractedLabels = extractedLabelsWithIndices.keys.toList();
-      String exatractedFilename =
+      String extractedFilename =
           UtilFunctions.extractFilenameFromJson(apiResponse);
       setState(() {
         uniqueLabels = extractedLabels;
-        filename = exatractedFilename;
+        filename = extractedFilename;
         response.clear();
         response.addAll(apiResponse);
         print("Updated response: $response");
@@ -62,11 +66,40 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  void handleLabelTap(index) {
-    setState(() {
-      debugPrint("Button pressed for index: $index");
-      // randomImageFuture = generateRandomImage();
-    });
+  void handleLabelTap(int index, String fileName) async {
+    setState(
+      () {
+        debugPrint("Button pressed for index: $index");
+        isLoadingOutput = true; // Show loading state
+      },
+    );
+
+    try {
+      // Call the API
+      final apiService = ApiFunctions();
+      final List<String> images = await apiService.selectLabel(
+        filename: fileName,
+        labelIndex: index,
+      );
+
+      // Update state with output images
+      setState(() {
+        outputImages = images; // Update image results
+        isLoadingOutput = false; // Remove loading state
+      });
+    } catch (e) {
+      debugPrint("Error occurred: $e");
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Error occured: $e'),
+          ),
+        );
+      }
+      setState(() {
+        isLoadingOutput = false; // Remove loading state on error
+      });
+    }
   }
 
   void handleLabelTapDebug() {
@@ -83,7 +116,6 @@ class _HomeScreenState extends State<HomeScreen> {
             'Dramatic Outputs',
             style: TextStyle(color: Colors.white),
           ),
-          // backgroundColor: const Color.fromARGB(255, 68, 41, 113),
         ),
         drawer: const HomeScreenDrawer(),
         body: SingleChildScrollView(
@@ -112,6 +144,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   : LabelPicker(
                       labelsWithIndices: extractedLabelsWithIndices,
                       onLabelTap: handleLabelTap,
+                      currentFilename: filename,
                     ),
               const SizedBox(height: 10.0),
               response.isEmpty
@@ -119,6 +152,14 @@ class _HomeScreenState extends State<HomeScreen> {
                   : CaptionString(
                       caption: UtilFunctions.extractImageCaption(response),
                     ),
+              const SizedBox(
+                height: 10.0,
+              ),
+              isLoadingOutput
+                  ? const Center(
+                      child: CircularProgressIndicator(),
+                    )
+                  : OutputImageGallery(outputImages: outputImages),
               FutureBuilder<Map<String, dynamic>>(
                 future: randomImageFuture,
                 builder: (context, snapshot) {
@@ -143,32 +184,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   }
                 },
               ),
-              // FutureBuilder<Map<String, dynamic>>(
-              //   future: generateRandomImage(),
-              //   builder: (context, snapshot) {
-              //     if (snapshot.connectionState == ConnectionState.waiting) {
-              //       return const CircularProgressIndicator(color: Colors.white);
-              //     } else if (snapshot.hasError) {
-              //       return const Text(
-              //         'Error loading image',
-              //         style: TextStyle(color: Colors.white),
-              //       );
-              //     } else if (snapshot.hasData) {
-              //       final image = snapshot.data!["image"] as Image;
-              //       final imageData = snapshot.data!["data"] as Uint8List;
-              //       return ImageView(imagePath: image, imageData: imageData);
-              //     } else {
-              //       return const Text(
-              //         'No image available',
-              //         style: TextStyle(color: Colors.white),
-              //       );
-              //     }
-              //   },
-              // ),
               IconButton(
                 onPressed: handleLabelTapDebug,
-                icon: Icon(Icons.save),
-              )
+                icon: const Icon(Icons.save),
+              ),
             ],
           ),
         ));

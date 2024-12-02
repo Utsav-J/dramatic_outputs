@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 
 class LabelPicker extends StatelessWidget {
-  const LabelPicker(
-      {super.key, required this.onLabelTap, required this.labelsWithIndices});
+  const LabelPicker({
+    super.key,
+    required this.onLabelTap,
+    required this.labelsWithIndices,
+    required this.currentFilename,
+  });
 
-  final void Function(int) onLabelTap;
-  final Map<String, dynamic> json_data = const {
-    "labels": ["Sky", "Lake", "Trees", "Hills"]
-  };
-  // final List<String> uniqueLabels;
+  final void Function(int, String) onLabelTap;
+  final String currentFilename;
   final Map<String, int> labelsWithIndices;
 
   @override
@@ -31,7 +32,7 @@ class LabelPicker extends StatelessWidget {
                 ),
                 child: GestureDetector(
                   onTap: () {
-                    onLabelTap(index);
+                    onLabelTap(index, currentFilename);
                   },
                   child: Text(
                     label,
