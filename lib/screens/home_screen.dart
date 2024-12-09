@@ -178,16 +178,16 @@ class _HomeScreenState extends State<HomeScreen> {
                     return ImageView(imagePath: image, imageData: imageData);
                   } else {
                     return const Text(
-                      'Press the button to load an image',
+                      '',
                       style: TextStyle(color: Colors.white),
                     );
                   }
                 },
               ),
-              IconButton(
-                onPressed: handleLabelTapDebug,
-                icon: const Icon(Icons.save),
-              ),
+              // IconButton(
+              //   onPressed: handleLabelTapDebug,
+              //   icon: const Icon(Icons.save),
+              // ),
             ],
           ),
         ));

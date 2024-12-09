@@ -19,27 +19,26 @@ class HomeScreenDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
+      elevation: 0,
       child: ListView(
         padding: EdgeInsets.zero,
         children: <Widget>[
-          DrawerHeader(
+          const DrawerHeader(
             decoration: BoxDecoration(
-              color: Theme.of(context).scaffoldBackgroundColor,
+              image: DecorationImage(
+                  fit: BoxFit.cover,
+                  opacity: 0.75,
+                  image: AssetImage("assets/images/prismLogo.png")),
             ),
-            child: const Column(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Text(
-                  'Developed by',
+                  "Meet the Devs",
                   style: TextStyle(
                     color: Colors.white,
+                    fontWeight: FontWeight.w500,
                     fontSize: 22,
-                  ),
-                ),
-                Text(
-                  "Prism Team",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 18,
                   ),
                 )
               ],
