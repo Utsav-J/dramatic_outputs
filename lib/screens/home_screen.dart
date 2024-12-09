@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'dart:typed_data';
-import 'package:dramatic_outputs/reusable/homescreen/captionText.dart';
+import 'package:dramatic_outputs/reusable/homescreen/caption_text.dart';
 import 'package:dramatic_outputs/reusable/homescreen/image_picker_column.dart';
 import 'package:dramatic_outputs/reusable/output/image_view.dart';
 import 'package:dramatic_outputs/reusable/homescreen/home_screen_drawer.dart';

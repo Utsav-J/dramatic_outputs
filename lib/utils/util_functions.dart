@@ -1,7 +1,9 @@
 import 'dart:io';
 import 'dart:typed_data';
+import 'package:app_linkster/app_linkster.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:uuid/uuid.dart';
 
 class UtilFunctions {
@@ -119,5 +121,27 @@ class UtilFunctions {
   static String extractFilenameFromJson(Map<String, dynamic> jsonData) {
     String filename = jsonData["filename"];
     return filename;
+  }
+
+  static void openInstagramProfile() async {
+    const String instagramUsername = 'acoolstick_';
+    final Uri instagramWebUri =
+        Uri.parse('https://www.instagram.com/$instagramUsername');
+
+    final launcher = AppLinksterLauncher();
+    await launcher.launchThisGuy(
+      instagramWebUri.toString(),
+      fallbackLaunchMode: LaunchMode.externalApplication,
+    );
+  }
+
+  static void openLinkedinProfile(String username) async {
+    final Uri linkedinWebUri =
+        Uri.parse('https://www.linkedin.com/in/$username/');
+    final launcher = AppLinksterLauncher();
+    await launcher.launchThisGuy(
+      linkedinWebUri.toString(),
+      fallbackLaunchMode: LaunchMode.externalApplication,
+    );
   }
 }

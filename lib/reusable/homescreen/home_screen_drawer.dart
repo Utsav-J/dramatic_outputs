@@ -3,18 +3,18 @@ import 'package:dramatic_outputs/reusable/homescreen/menu_item.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+void openLinkedinProfile(String username) async {
+  final Uri linkedinWebUri =
+      Uri.parse('https://www.linkedin.com/in/$username/');
+  final launcher = AppLinksterLauncher();
+  await launcher.launchThisGuy(
+    linkedinWebUri.toString(),
+    fallbackLaunchMode: LaunchMode.externalApplication,
+  );
+}
+
 class HomeScreenDrawer extends StatelessWidget {
   const HomeScreenDrawer({super.key});
-
-  void openInstagramProfile() async {
-    const String instagramUsername = 'acoolstick_';
-    final Uri instagramWebUri =
-        Uri.parse('https://www.instagram.com/$instagramUsername');
-
-    final launcher = AppLinksterLauncher();
-    await launcher.launchThisGuy(instagramWebUri.toString(),
-        fallbackLaunchMode: LaunchMode.externalApplication);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,24 +46,26 @@ class HomeScreenDrawer extends StatelessWidget {
             ),
           ),
           MenuItem(
-            icon: const Icon(Icons.person),
+            iconPic: "assets/images/devpics/utsav_linkedinpic.jpeg",
             title: "Utsav Jaiswal",
-            onTap: openInstagramProfile,
+            onTap: (title) => openLinkedinProfile("iamutsavjaiswal"),
           ),
           MenuItem(
-            icon: const Icon(Icons.person),
+            iconPic: "assets/images/devpics/madan_linkedinpic.jpeg",
             title: "Madan Raj Upadhyay",
-            onTap: () {},
+            onTap: (title) =>
+                openLinkedinProfile("madan-raj-upadhyay-18b869227"),
           ),
           MenuItem(
-            icon: const Icon(Icons.person),
+            iconPic: "assets/images/devpics/ukasha_linkedinpic.jpeg",
             title: "Ukasha Ahmed",
-            onTap: () {},
+            onTap: (title) => openLinkedinProfile("ukasha-ahmad-749401200"),
           ),
           MenuItem(
-            icon: const Icon(Icons.person),
+            iconPic: "assets/images/devpics/aditya_linkedinpic.jpeg",
             title: "Aditya Vikram Singh",
-            onTap: () {},
+            onTap: (title) =>
+                openLinkedinProfile("aditya-vikram-singh-50602a25b"),
           ),
         ],
       ),
