@@ -30,6 +30,26 @@ class _HomeScreenState extends State<HomeScreen> {
   String filename = "";
   List<String> outputImages = [];
 
+  void resetState() {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text("New Session"),
+        duration: Duration(seconds: 2),
+      ),
+    );
+    setState(() {
+      uniqueLabels.clear();
+      extractedLabelsWithIndices.clear();
+      response.clear();
+      selectedImage = null;
+      filename = "";
+      outputImages.clear();
+      isLoading = false;
+      isLoadingOutput = false;
+      randomImageFuture = null;
+    });
+  }
+
   Future<void> updateLabels(File imageFile) async {
     setState(() {
       isLoading = true;
@@ -121,21 +141,25 @@ class _HomeScreenState extends State<HomeScreen> {
         body: SingleChildScrollView(
           child: Column(
             children: [
-              ImagePickerColumn(onCheckPressed: () {
-                if (selectedImage != null) {
-                  updateLabels(selectedImage!);
-                } else {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('Please select an image first!'),
-                    ),
-                  );
-                }
-              }, onImageSelected: (File image) {
-                setState(() {
-                  selectedImage = image;
-                });
-              }),
+              ImagePickerColumn(
+                onCheckPressed: () {
+                  if (selectedImage != null) {
+                    updateLabels(selectedImage!);
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Please select an image first!'),
+                      ),
+                    );
+                  }
+                },
+                onImageSelected: (File image) {
+                  setState(() {
+                    selectedImage = image;
+                  });
+                },
+                onReset: resetState, // Pass reset state callback
+              ),
               isLoading == true
                   ? LinearProgressIndicator(
                       color: const Color.fromARGB(255, 47, 129, 100),

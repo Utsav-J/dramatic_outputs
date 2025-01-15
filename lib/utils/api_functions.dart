@@ -125,7 +125,7 @@ import 'package:dio/dio.dart';
 */
 
 class ApiFunctions {
-  static String baseUrl = "https://9231-34-125-217-103.ngrok-free.app";
+  static String baseUrl = "https://d1ac-34-168-245-244.ngrok-free.app";
   static String getLabelEndpoint = "/upload-image/";
   static String getImagesEndpoint = "/select-label/";
   Dio dio = Dio();

@@ -16,8 +16,12 @@ class OutputImageGallery extends StatelessWidget {
     if (outputImages.isEmpty) {
       return const Center(
         child: Text(
-          "No images generated yet.",
-          style: TextStyle(color: Colors.white, fontSize: 16),
+          "No images generated yet.\nPress on the original image to start a new session.",
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 16,
+          ),
+          textAlign: TextAlign.center,
         ),
       );
     }
