@@ -56,7 +56,7 @@ class OutputImageGallery extends StatelessWidget {
                   imageData: snapshot.data!,
                   imagePath: Image.memory(
                     snapshot.data!,
-                    fit: BoxFit.fill,
+                    fit: BoxFit.cover,
                   ),
                 ),
               );

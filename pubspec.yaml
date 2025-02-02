@@ -52,6 +52,7 @@ dependencies:
   permission_handler: ^11.3.1
   image_watermark: ^0.1.0
   image: ^4.3.0
+  photo_view: ^0.15.0
 
 dev_dependencies:
   flutter_test:

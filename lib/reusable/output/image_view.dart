@@ -1,4 +1,5 @@
 import 'package:dramatic_outputs/reusable/output/feedback_button.dart';
+import 'package:dramatic_outputs/screens/full_screen_image.dart';
 import 'package:dramatic_outputs/utils/util_functions.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -90,12 +91,19 @@ class ImageView extends StatelessWidget {
           Stack(
             children: [
               // Draw the image first so the button appears on top
-              ClipRRect(
-                borderRadius: BorderRadius.circular(25),
-                child: SizedBox(
-                  height: 300, // Define a fixed height
-                  width: double.infinity, // Use full width
-                  child: imagePath, // Ensure `imagePath` respects constraints
+              GestureDetector(
+                onTap: () => _showFullScreenImage(context),
+                child: Hero(
+                  tag: imageData,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(25),
+                    child: SizedBox(
+                      height: 300, // Define a fixed height
+                      width: double.infinity, // Use full width
+                      child:
+                          imagePath, // Ensure `imagePath` respects constraints
+                    ),
+                  ),
                 ),
               ),
               // Then, position the button on top of the image
@@ -148,4 +156,35 @@ class ImageView extends StatelessWidget {
       ),
     );
   }
+
+  void _showFullScreenImage(BuildContext context) {
+    Navigator.of(context).push(
+      PageRouteBuilder(
+        opaque: false, // Makes the background transparent
+        pageBuilder: (context, animation, secondaryAnimation) {
+          return FadeTransition(
+            opacity: animation,
+            child: FullScreenImage(imageData: imageData),
+          );
+        },
+      ),
+    );
+  }
+  // void _showFullScreenImage(BuildContext context) {
+  //   showDialog(
+  //     useSafeArea: true,
+  //     context: context,
+  //     builder: (context) {
+  //       return Dialog(
+  //         backgroundColor: Colors.black,
+  //         child: PhotoView(
+  //           imageProvider: MemoryImage(imageData), // Display full-screen image
+  //           minScale: PhotoViewComputedScale.contained,
+  //           maxScale: PhotoViewComputedScale.covered * 2,
+  //           heroAttributes: PhotoViewHeroAttributes(tag: imageData),
+  //         ),
+  //       );
+  //     },
+  //   );
+  // }
 }
