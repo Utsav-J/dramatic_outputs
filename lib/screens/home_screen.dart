@@ -208,10 +208,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   }
                 },
               ),
-              // IconButton(
-              //   onPressed: handleLabelTapDebug,
-              //   icon: const Icon(Icons.save),
-              // ),
+              IconButton(
+                onPressed: handleLabelTapDebug,
+                icon: const Icon(Icons.save),
+              ),
             ],
           ),
         ));

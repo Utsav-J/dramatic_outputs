@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 bool isOnboardingDone = false;
 
@@ -15,6 +16,11 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
+  );
+  await Supabase.initialize(
+    url: 'https://gbkbgnpcuvdvoqjfsocb.supabase.co',
+    anonKey:
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imdia2JnbnBjdXZkdm9xamZzb2NiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzg2NTMyNzQsImV4cCI6MjA1NDIyOTI3NH0.v2u0NO8tjK1VP5Zw8E-hCuzD5k7C6335LsuvNgknbiA',
   );
   final prefs = await SharedPreferences.getInstance();
   isOnboardingDone = prefs.getBool('isOnboardingDone') ?? false;

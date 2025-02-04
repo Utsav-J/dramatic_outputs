@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:dramatic_outputs/reusable/output/pop_up_form.dart';
 import 'package:dramatic_outputs/utils/device_id_manager.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -8,14 +10,19 @@ class FeedbackButton extends StatefulWidget {
   const FeedbackButton({
     super.key,
     required this.isLike,
+    required this.uploadDislikedImage,
+    this.imageData,
   });
   final bool isLike;
+  final Future<String> Function(Uint8List) uploadDislikedImage;
+  final Uint8List? imageData;
 
   @override
   State<FeedbackButton> createState() => _FeedbackButtonState();
 }
 
 class _FeedbackButtonState extends State<FeedbackButton> {
+  String imageUrl = "";
   static final _database = FirebaseDatabase.instanceFor(
     app: Firebase.app(),
     databaseURL:
@@ -87,7 +94,7 @@ class _FeedbackButtonState extends State<FeedbackButton> {
         }
       }
       if (context.mounted && isActive) {
-        PopUpForm.showFormDialog(context);
+        PopUpForm.showFormDialog(context, imageUrl);
       }
     }
   }
@@ -95,8 +102,18 @@ class _FeedbackButtonState extends State<FeedbackButton> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
+      onTap: () async {
         handleFeedback(context);
+        if (!widget.isLike && !isActive) {
+          print("Previously the image Url was : " + imageUrl);
+          final supabaseImageUrl =
+              await widget.uploadDislikedImage(widget.imageData!);
+          setState(() {
+            imageUrl = supabaseImageUrl;
+          });
+          print("Image has been successfully uploaded");
+          print("Now the URL is : " + imageUrl);
+        }
       },
       child: Row(
         children: [

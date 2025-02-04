@@ -11,30 +11,33 @@ class FeedbackModel {
   final String email;
 
   final String imagePrompt; //system generated
-  final List<String> imageUrls; //firebase storage urls
+  final String imageUrl; //firebase storage urls
+  // final List<String> imageUrls; //firebase storage urls
 
-  const FeedbackModel({
-    required this.feedbackId,
-    required this.deviceId,
-    required this.timestamp,
-    required this.textFeedback,
-    required this.chipFeedback,
-    required this.email,
-    required this.imagePrompt,
-    required this.imageUrls,
-  });
+  const FeedbackModel(
+      {required this.feedbackId,
+      required this.deviceId,
+      required this.timestamp,
+      required this.textFeedback,
+      required this.chipFeedback,
+      required this.email,
+      required this.imagePrompt,
+      required this.imageUrl
+      // required this.imageUrls,
+      });
 
   factory FeedbackModel.fromMap(Map<String, dynamic> json) {
     return FeedbackModel(
-      feedbackId: json['feedbackId'],
-      deviceId: json['deviceId'],
-      timestamp: json['timestamp'],
-      textFeedback: json['textFeedback'],
-      chipFeedback: json['chipFeedback'],
-      email: json['email'],
-      imagePrompt: json['imagePrompt'],
-      imageUrls: json['imageUrls'].cast<String>(),
-    );
+        feedbackId: json['feedbackId'],
+        deviceId: json['deviceId'],
+        timestamp: json['timestamp'],
+        textFeedback: json['textFeedback'],
+        chipFeedback: json['chipFeedback'],
+        email: json['email'],
+        imagePrompt: json['imagePrompt'],
+        imageUrl: json['imageUrl']
+        // imageUrls: json['imageUrls'].cast<String>(),
+        );
   }
 
   Map<String, dynamic> toMap() {
@@ -46,7 +49,8 @@ class FeedbackModel {
     data['chipFeedback'] = chipFeedback;
     data['email'] = email;
     data['imagePrompt'] = imagePrompt;
-    data['imageUrls'] = imageUrls;
+    data["imageUrl"] = imageUrl;
+    // data['imageUrls'] = imageUrls;
     return data;
   }
 }

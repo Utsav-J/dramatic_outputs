@@ -24,12 +24,13 @@ class PopUpForm {
   static TextEditingController additionalCommentsController =
       TextEditingController();
 
-  static void handleFormSubmission() async {
+  static void handleFormSubmission(String imageUrl) async {
     String feedbackId = UtilFunctions.generateUniqueFeedbackId();
     String deviceId = await DeviceIdManager.getDeviceId();
     final String email = emailController.text;
     final List<String> selectedItemsList = selectedItems.toList();
     final String additionalComments = additionalCommentsController.text;
+
     final feedback = FeedbackModel(
       feedbackId: feedbackId,
       deviceId: deviceId,
@@ -38,7 +39,8 @@ class PopUpForm {
       chipFeedback: selectedItemsList.join(", "),
       email: email,
       imagePrompt: "ImagePromptPlaceholder",
-      imageUrls: ["ImageUrlsPlaceholder", "ImageUrlsPlaceholder"],
+      imageUrl: imageUrl,
+      // imageUrls: ["ImageUrlsPlaceholder", "ImageUrlsPlaceholder"],
     );
 
     try {
@@ -58,7 +60,7 @@ class PopUpForm {
     return null;
   }
 
-  static void showFormDialog(BuildContext context) {
+  static void showFormDialog(BuildContext context, String imageUrl) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -184,7 +186,7 @@ class PopUpForm {
               onPressed: () {
                 if (_formKey.currentState!.validate() &&
                     selectedItems.isNotEmpty) {
-                  handleFormSubmission();
+                  handleFormSubmission(imageUrl);
                   Navigator.of(context).pop(); // Close the dialog
                 } else if (selectedItems.isEmpty) {
                   (context as Element).markNeedsBuild();

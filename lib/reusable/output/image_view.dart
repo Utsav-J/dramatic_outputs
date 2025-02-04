@@ -5,6 +5,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image/image.dart' as img;
+import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:uuid/uuid.dart';
 
 class ImageView extends StatelessWidget {
   const ImageView({
@@ -26,6 +28,44 @@ class ImageView extends StatelessWidget {
         );
       }
     }
+  }
+
+  Future<String> uploadDislikedImage(Uint8List imageData) async {
+    try {
+      final supabase = Supabase.instance.client;
+
+      // Generate a unique filename
+      String uniqueId = const Uuid().v4();
+      String fileName = "disliked_images/$uniqueId.jpg";
+
+      // Upload image to Supabase Storage
+      final String? filePath = await supabase.storage
+          .from('dislikedOutputImages')
+          .uploadBinary(fileName, imageData,
+              fileOptions: const FileOptions(
+                contentType: 'image/jpeg',
+              ));
+      if (filePath != null && filePath.isNotEmpty) {
+        // Get the public URL of the uploaded image
+        // final publicURL = supabase.storage
+        //     .from('dislikedOutputImages')
+        //     .getPublicUrl(filePath);
+        const String supabaseStorageUrl =
+            "https://gbkbgnpcuvdvoqjfsocb.supabase.co/storage/v1/object/public/";
+        final String publicURL = "$supabaseStorageUrl$filePath";
+        // print("Image uploaded successfully: $publicURL");
+        print(
+            "_________________________________________________________________________________________________");
+        // final publicURL =
+        //     "https://gbkbgnpcuvdvoqjfsocb.supabase.co/storage/v1/object/public/dislikedOutputImages/dislikedOutputImages/disliked_images/${uniqueId}.jpg";
+        return publicURL;
+      } else {
+        throw Exception("Upload failed: File path is null or empty.");
+      }
+    } catch (e) {
+      print("Error uploading image to Supabase: $e");
+    }
+    return "";
   }
 
   Future<void> downloadWatermarkedImage(
@@ -132,14 +172,15 @@ class ImageView extends StatelessWidget {
           const SizedBox(
             height: 10,
           ),
-          const Row(
+          Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               FeedbackButton(
                 isLike: true,
+                uploadDislikedImage: uploadDislikedImage,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 30, // Set the height of the divider as needed
                 child: VerticalDivider(
                   color: Colors.grey, // Set the color of the divider
@@ -149,6 +190,8 @@ class ImageView extends StatelessWidget {
               ),
               FeedbackButton(
                 isLike: false,
+                uploadDislikedImage: uploadDislikedImage,
+                imageData: imageData,
               ),
             ],
           )
@@ -170,21 +213,4 @@ class ImageView extends StatelessWidget {
       ),
     );
   }
-  // void _showFullScreenImage(BuildContext context) {
-  //   showDialog(
-  //     useSafeArea: true,
-  //     context: context,
-  //     builder: (context) {
-  //       return Dialog(
-  //         backgroundColor: Colors.black,
-  //         child: PhotoView(
-  //           imageProvider: MemoryImage(imageData), // Display full-screen image
-  //           minScale: PhotoViewComputedScale.contained,
-  //           maxScale: PhotoViewComputedScale.covered * 2,
-  //           heroAttributes: PhotoViewHeroAttributes(tag: imageData),
-  //         ),
-  //       );
-  //     },
-  //   );
-  // }
 }
