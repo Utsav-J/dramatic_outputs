@@ -4,7 +4,7 @@ import 'package:http_parser/http_parser.dart';
 import 'package:dio/dio.dart';
 
 class ApiFunctions {
-  static String baseUrl = "https://77b5-34-168-169-176.ngrok-free.app";
+  static String baseUrl = "https://97f0-34-125-200-123.ngrok-free.app";
   static String getLabelEndpoint = "/upload-image/";
   static String getImagesEndpoint = "/select-label/";
   Dio dio = Dio();

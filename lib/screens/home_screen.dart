@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'package:dramatic_outputs/reusable/homescreen/caption_text.dart';
 import 'package:dramatic_outputs/reusable/homescreen/image_picker_column.dart';
+import 'package:dramatic_outputs/reusable/levelPicker/three_way_switch_lib.dart';
 import 'package:dramatic_outputs/reusable/output/image_view.dart';
 import 'package:dramatic_outputs/reusable/homescreen/home_screen_drawer.dart';
 import 'package:dramatic_outputs/reusable/homescreen/label_picker.dart';
@@ -28,6 +29,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Map<String, dynamic> response = {};
   File? selectedImage;
   String filename = "";
+  String currentLevel = "Medium";
   List<String> outputImages = [];
 
   void resetState() {
@@ -100,6 +102,7 @@ class _HomeScreenState extends State<HomeScreen> {
       final List<String> images = await apiService.selectLabel(
         filename: fileName,
         labelIndex: index,
+        level: currentLevel,
       );
 
       // Update state with output images
@@ -170,6 +173,17 @@ class _HomeScreenState extends State<HomeScreen> {
                       onLabelTap: handleLabelTap,
                       currentFilename: filename,
                     ),
+              const SizedBox(
+                height: 5.0,
+              ),
+              ThreeWaySwitch(
+                onChanged: (value) {
+                  setState(() {
+                    currentLevel = value; // Update the selected level
+                  });
+                  print("Selected Level: $currentLevel");
+                },
+              ),
               const SizedBox(height: 10.0),
               response.isEmpty
                   ? const SizedBox()
