@@ -5,10 +5,11 @@ import 'package:flutter/services.dart';
 
 class OutputImageGallery extends StatelessWidget {
   final List<String> outputImages;
-
+  final VoidCallback onReset;
   const OutputImageGallery({
     super.key,
     required this.outputImages,
+    required this.onReset,
   });
 
   @override
@@ -58,6 +59,7 @@ class OutputImageGallery extends StatelessWidget {
                     snapshot.data!,
                     fit: BoxFit.cover,
                   ),
+                  onReset: onReset,
                 ),
               );
             } else {

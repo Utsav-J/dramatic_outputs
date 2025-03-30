@@ -30,6 +30,7 @@ class _HomeScreenState extends State<HomeScreen> {
   File? selectedImage;
   String filename = "";
   String currentLevel = "Medium";
+  bool isGenerating = false;
   List<String> outputImages = [];
 
   void resetState() {
@@ -89,9 +90,15 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void handleLabelTap(int index, String fileName) async {
+    if (isGenerating) {
+      print("Label tap is not working");
+      return;
+    }
+    print("Label tap is working");
     setState(
       () {
         debugPrint("Button pressed for index: $index");
+        isGenerating = true;
         isLoadingOutput = true; // Show loading state
       },
     );
@@ -119,7 +126,9 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         );
       }
+    } finally {
       setState(() {
+        isGenerating = false;
         isLoadingOutput = false; // Remove loading state on error
       });
     }
@@ -144,24 +153,41 @@ class _HomeScreenState extends State<HomeScreen> {
         body: SingleChildScrollView(
           child: Column(
             children: [
-              ImagePickerColumn(
-                onCheckPressed: () {
-                  if (selectedImage != null) {
-                    updateLabels(selectedImage!);
-                  } else {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('Please select an image first!'),
-                      ),
-                    );
-                  }
-                },
-                onImageSelected: (File image) {
-                  setState(() {
-                    selectedImage = image;
-                  });
-                },
-                onReset: resetState, // Pass reset state callback
+              AbsorbPointer(
+                absorbing: isGenerating,
+                child: ImagePickerColumn(
+                  onCheckPressed: isGenerating
+                      ? () {
+                          print("Oncheck pressed is disabled");
+                        }
+                      : () {
+                          print("Inside oncheck pressed");
+                          if (selectedImage != null) {
+                            updateLabels(selectedImage!);
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text('Please select an image first!'),
+                              ),
+                            );
+                          }
+                        },
+                  onImageSelected: isGenerating
+                      ? (File _) {} // No-op function to avoid type error
+                      : (File image) {
+                          if (selectedImage != null &&
+                              selectedImage!.path == image.path) {
+                            print("Image already selected, ignoring tap...");
+                            return; // Prevent resetting if the same image is tapped
+                          }
+                          setState(() {
+                            selectedImage = image;
+                          });
+                        },
+                  onReset: isGenerating
+                      ? () {}
+                      : resetState, // Pass reset state callback
+                ),
               ),
               isLoading == true
                   ? LinearProgressIndicator(
@@ -170,19 +196,24 @@ class _HomeScreenState extends State<HomeScreen> {
                     )
                   : LabelPicker(
                       labelsWithIndices: extractedLabelsWithIndices,
-                      onLabelTap: handleLabelTap,
+                      onLabelTap: handleLabelTap, // Disable if generating,
                       currentFilename: filename,
                     ),
               const SizedBox(
                 height: 5.0,
               ),
-              ThreeWaySwitch(
-                onChanged: (value) {
-                  setState(() {
-                    currentLevel = value; // Update the selected level
-                  });
-                  print("Selected Level: $currentLevel");
-                },
+              IgnorePointer(
+                ignoring: isGenerating,
+                child: ThreeWaySwitch(
+                  onChanged: isGenerating
+                      ? (value) {}
+                      : (value) {
+                          setState(() {
+                            currentLevel = value; // Update the selected level
+                          });
+                          print("Selected Level: $currentLevel");
+                        },
+                ),
               ),
               const SizedBox(height: 10.0),
               response.isEmpty
@@ -197,7 +228,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   ? const Center(
                       child: CircularProgressIndicator(),
                     )
-                  : OutputImageGallery(outputImages: outputImages),
+                  : OutputImageGallery(
+                      outputImages: outputImages,
+                      onReset: resetState,
+                    ),
               FutureBuilder<Map<String, dynamic>>(
                 future: randomImageFuture,
                 builder: (context, snapshot) {
@@ -213,7 +247,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   } else if (snapshot.hasData) {
                     final image = snapshot.data!["image"] as Image;
                     final imageData = snapshot.data!["data"] as Uint8List;
-                    return ImageView(imagePath: image, imageData: imageData);
+                    return ImageView(
+                      imagePath: image,
+                      imageData: imageData,
+                      onReset: resetState,
+                    );
                   } else {
                     return const Text(
                       '',
@@ -222,10 +260,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   }
                 },
               ),
-              IconButton(
-                onPressed: handleLabelTapDebug,
-                icon: const Icon(Icons.save),
-              ),
+              // IconButton(
+              //   onPressed: handleLabelTapDebug,
+              //   icon: const Icon(Icons.save),
+              // ),
             ],
           ),
         ));

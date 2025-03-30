@@ -1,0 +1,173 @@
+Date : 2025-03-03 21:08:03
+Directory : e:\AndroidStudio\AppDev\Android Part 4\dramatic_outputs
+Total : 81 files,  4130 codes, 430 comments, 512 blanks, all 5072 lines
+
+Languages
++-----------------+------------+------------+------------+------------+------------+
+| language        | files      | code       | comment    | blank      | total      |
++-----------------+------------+------------+------------+------------+------------+
+| Dart            |         31 |      2,559 |        138 |        231 |      2,928 |
+| C++             |         16 |        569 |        127 |        188 |        884 |
+| XML             |         10 |        487 |         53 |         14 |        554 |
+| JSON            |          6 |        279 |          0 |          4 |        283 |
+| Gradle          |          3 |         75 |         11 |         17 |        103 |
+| Swift           |          6 |         66 |          7 |         20 |         93 |
+| YAML            |          2 |         44 |         79 |         19 |        142 |
+| HTML            |          1 |         19 |         15 |          5 |         39 |
+| Markdown        |          2 |         13 |          0 |          9 |         22 |
+| Shell Script    |          1 |          8 |          0 |          0 |          8 |
+| Java Properties |          2 |          8 |          0 |          2 |         10 |
+| Kotlin          |          1 |          3 |          0 |          3 |          6 |
++-----------------+------------+------------+------------+------------+------------+
+
+Directories
++----------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                                                             | files      | code       | comment    | blank      | total      |
++----------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                                                                |         81 |      4,130 |        430 |        512 |      5,072 |
+| . (Files)                                                                                                                        |          4 |         55 |         79 |         26 |        160 |
+| android                                                                                                                          |         14 |        199 |         62 |         33 |        294 |
+| android (Files)                                                                                                                  |          3 |         44 |          2 |          9 |         55 |
+| android\app                                                                                                                      |         10 |        150 |         60 |         23 |        233 |
+| android\app (Files)                                                                                                              |          2 |         64 |          9 |          9 |         82 |
+| android\app\src                                                                                                                  |          8 |         86 |         51 |         14 |        151 |
+| android\app\src\debug                                                                                                            |          1 |          3 |          4 |          1 |          8 |
+| android\app\src\main                                                                                                             |          6 |         80 |         43 |         12 |        135 |
+| android\app\src\main (Files)                                                                                                     |          1 |         51 |         11 |          3 |         65 |
+| android\app\src\main\kotlin                                                                                                      |          1 |          3 |          0 |          3 |          6 |
+| android\app\src\main\kotlin\com                                                                                                  |          1 |          3 |          0 |          3 |          6 |
+| android\app\src\main\kotlin\com\example                                                                                          |          1 |          3 |          0 |          3 |          6 |
+| android\app\src\main\kotlin\com\example\dramatic_outputs                                                                         |          1 |          3 |          0 |          3 |          6 |
+| android\app\src\main\res                                                                                                         |          4 |         26 |         32 |          6 |         64 |
+| android\app\src\main\res\drawable                                                                                                |          1 |          4 |          7 |          2 |         13 |
+| android\app\src\main\res\drawable-v21                                                                                            |          1 |          4 |          7 |          2 |         13 |
+| android\app\src\main\res\values                                                                                                  |          1 |          9 |          9 |          1 |         19 |
+| android\app\src\main\res\values-night                                                                                            |          1 |          9 |          9 |          1 |         19 |
+| android\app\src\profile                                                                                                          |          1 |          3 |          4 |          1 |          8 |
+| android\gradle                                                                                                                   |          1 |          5 |          0 |          1 |          6 |
+| android\gradle\wrapper                                                                                                           |          1 |          5 |          0 |          1 |          6 |
+| ios                                                                                                                              |          8 |        229 |          4 |         13 |        246 |
+| ios\Runner                                                                                                                       |          7 |        222 |          2 |          9 |        233 |
+| ios\Runner (Files)                                                                                                               |          2 |         13 |          0 |          3 |         16 |
+| ios\RunnerTests                                                                                                                  |          1 |          7 |          2 |          4 |         13 |
+| ios\Runner\Assets.xcassets                                                                                                       |          3 |        148 |          0 |          4 |        152 |
+| ios\Runner\Assets.xcassets\AppIcon.appiconset                                                                                    |          1 |        122 |          0 |          1 |        123 |
+| ios\Runner\Assets.xcassets\LaunchImage.imageset                                                                                  |          2 |         26 |          0 |          3 |         29 |
+| ios\Runner\Base.lproj                                                                                                            |          2 |         61 |          2 |          2 |         65 |
+| lib                                                                                                                              |         31 |      2,553 |        128 |        224 |      2,905 |
+| lib (Files)                                                                                                                      |          4 |        349 |         19 |         24 |        392 |
+| lib\models                                                                                                                       |          1 |         46 |         15 |          7 |         68 |
+| lib\reusable                                                                                                                     |         14 |      1,176 |         51 |         95 |      1,322 |
+| lib\reusable\downloadButton                                                                                                      |          3 |        169 |          1 |         19 |        189 |
+| lib\reusable\homescreen                                                                                                          |          6 |        373 |         14 |         31 |        418 |
+| lib\reusable\levelPicker                                                                                                         |          1 |         61 |          3 |          7 |         71 |
+| lib\reusable\output                                                                                                              |          4 |        573 |         33 |         38 |        644 |
+| lib\routes                                                                                                                       |          1 |         24 |          0 |          4 |         28 |
+| lib\screens                                                                                                                      |          4 |        469 |         11 |         31 |        511 |
+| lib\static                                                                                                                       |          1 |        131 |          0 |          3 |        134 |
+| lib\utils                                                                                                                        |          6 |        358 |         32 |         60 |        450 |
+| linux                                                                                                                            |          5 |        114 |         33 |         44 |        191 |
+| linux (Files)                                                                                                                    |          3 |         94 |         24 |         33 |        151 |
+| linux\flutter                                                                                                                    |          2 |         20 |          9 |         11 |         40 |
+| macos                                                                                                                            |          6 |        458 |          5 |         16 |        479 |
+| macos\Flutter                                                                                                                    |          1 |         20 |          3 |          4 |         27 |
+| macos\Runner                                                                                                                     |          4 |        431 |          0 |          8 |        439 |
+| macos\Runner (Files)                                                                                                             |          2 |         20 |          0 |          6 |         26 |
+| macos\RunnerTests                                                                                                                |          1 |          7 |          2 |          4 |         13 |
+| macos\Runner\Assets.xcassets                                                                                                     |          1 |         68 |          0 |          1 |         69 |
+| macos\Runner\Assets.xcassets\AppIcon.appiconset                                                                                  |          1 |         68 |          0 |          1 |         69 |
+| macos\Runner\Base.lproj                                                                                                          |          1 |        343 |          0 |          1 |        344 |
+| test                                                                                                                             |          1 |         14 |         10 |          7 |         31 |
+| web                                                                                                                              |          2 |         54 |         15 |          6 |         75 |
+| windows                                                                                                                          |         10 |        454 |         94 |        143 |        691 |
+| windows\flutter                                                                                                                  |          2 |         26 |          9 |         11 |         46 |
+| windows\runner                                                                                                                   |          8 |        428 |         85 |        132 |        645 |
++----------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++----------------------------------------------------------------------------------------------------------------------------------+-----------------+------------+------------+------------+------------+
+| filename                                                                                                                         | language        | code       | comment    | blank      | total      |
++----------------------------------------------------------------------------------------------------------------------------------+-----------------+------------+------------+------------+------------+
+| e:\AndroidStudio\AppDev\Android Part 4\dramatic_outputs\README.md                                                                | Markdown        |         10 |          0 |          7 |         17 |
+| e:\AndroidStudio\AppDev\Android Part 4\dramatic_outputs\analysis_options.yaml                                                    | YAML            |          3 |         22 |          4 |         29 |
+| e:\AndroidStudio\AppDev\Android Part 4\dramatic_outputs\android\app\build.gradle                                                 | Gradle          |         34 |          9 |          9 |         52 |
+| e:\AndroidStudio\AppDev\Android Part 4\dramatic_outputs\android\app\google-services.json                                         | JSON            |         30 |          0 |          0 |         30 |
+| e:\AndroidStudio\AppDev\Android Part 4\dramatic_outputs\android\app\src\debug\AndroidManifest.xml                                | XML             |          3 |          4 |          1 |          8 |
+| e:\AndroidStudio\AppDev\Android Part 4\dramatic_outputs\android\app\src\main\AndroidManifest.xml                                 | XML             |         51 |         11 |          3 |         65 |
+| e:\AndroidStudio\AppDev\Android Part 4\dramatic_outputs\android\app\src\main\kotlin\com\example\dramatic_outputs\MainActivity.kt | Kotlin          |          3 |          0 |          3 |          6 |
+| e:\AndroidStudio\AppDev\Android Part 4\dramatic_outputs\android\app\src\main\res\drawable-v21\launch_background.xml              | XML             |          4 |          7 |          2 |         13 |
+| e:\AndroidStudio\AppDev\Android Part 4\dramatic_outputs\android\app\src\main\res\drawable\launch_background.xml                  | XML             |          4 |          7 |          2 |         13 |
+| e:\AndroidStudio\AppDev\Android Part 4\dramatic_outputs\android\app\src\main\res\values-night\styles.xml                         | XML             |          9 |          9 |          1 |         19 |
+| e:\AndroidStudio\AppDev\Android Part 4\dramatic_outputs\android\app\src\main\res\values\styles.xml                               | XML             |          9 |          9 |          1 |         19 |
+| e:\AndroidStudio\AppDev\Android Part 4\dramatic_outputs\android\app\src\profile\AndroidManifest.xml                              | XML             |          3 |          4 |          1 |          8 |
+| e:\AndroidStudio\AppDev\Android Part 4\dramatic_outputs\android\build.gradle                                                     | Gradle          |         19 |          0 |          3 |         22 |
+| e:\AndroidStudio\AppDev\Android Part 4\dramatic_outputs\android\gradle.properties                                                | Java Properties |          3 |          0 |          1 |          4 |
+| e:\AndroidStudio\AppDev\Android Part 4\dramatic_outputs\android\gradle\wrapper\gradle-wrapper.properties                         | Java Properties |          5 |          0 |          1 |          6 |
+| e:\AndroidStudio\AppDev\Android Part 4\dramatic_outputs\android\settings.gradle                                                  | Gradle          |         22 |          2 |          5 |         29 |
+| e:\AndroidStudio\AppDev\Android Part 4\dramatic_outputs\firebase.json                                                            | JSON            |          1 |          0 |          0 |          1 |
+| e:\AndroidStudio\AppDev\Android Part 4\dramatic_outputs\ios\RunnerTests\RunnerTests.swift                                        | Swift           |          7 |          2 |          4 |         13 |
+| e:\AndroidStudio\AppDev\Android Part 4\dramatic_outputs\ios\Runner\AppDelegate.swift                                             | Swift           |         12 |          0 |          2 |         14 |
+| e:\AndroidStudio\AppDev\Android Part 4\dramatic_outputs\ios\Runner\Assets.xcassets\AppIcon.appiconset\Contents.json              | JSON            |        122 |          0 |          1 |        123 |
+| e:\AndroidStudio\AppDev\Android Part 4\dramatic_outputs\ios\Runner\Assets.xcassets\LaunchImage.imageset\Contents.json            | JSON            |         23 |          0 |          1 |         24 |
+| e:\AndroidStudio\AppDev\Android Part 4\dramatic_outputs\ios\Runner\Assets.xcassets\LaunchImage.imageset\README.md                | Markdown        |          3 |          0 |          2 |          5 |
+| e:\AndroidStudio\AppDev\Android Part 4\dramatic_outputs\ios\Runner\Base.lproj\LaunchScreen.storyboard                            | XML             |         36 |          1 |          1 |         38 |
+| e:\AndroidStudio\AppDev\Android Part 4\dramatic_outputs\ios\Runner\Base.lproj\Main.storyboard                                    | XML             |         25 |          1 |          1 |         27 |
+| e:\AndroidStudio\AppDev\Android Part 4\dramatic_outputs\ios\Runner\Runner-Bridging-Header.h                                      | C++             |          1 |          0 |          1 |          2 |
+| e:\AndroidStudio\AppDev\Android Part 4\dramatic_outputs\lib\firebase_options.dart                                                | Dart            |         59 |         12 |          5 |         76 |
+| e:\AndroidStudio\AppDev\Android Part 4\dramatic_outputs\lib\loc.sh                                                               | Shell Script    |          8 |          0 |          0 |          8 |
+| e:\AndroidStudio\AppDev\Android Part 4\dramatic_outputs\lib\main.dart                                                            | Dart            |         61 |          0 |          5 |         66 |
+| e:\AndroidStudio\AppDev\Android Part 4\dramatic_outputs\lib\models\feedback_model.dart                                           | Dart            |         46 |         15 |          7 |         68 |
+| e:\AndroidStudio\AppDev\Android Part 4\dramatic_outputs\lib\reusable\downloadButton\button_shape_widget.dart                     | Dart            |         51 |          0 |          6 |         57 |
+| e:\AndroidStudio\AppDev\Android Part 4\dramatic_outputs\lib\reusable\downloadButton\download_button.dart                         | Dart            |         82 |          1 |          9 |         92 |
+| e:\AndroidStudio\AppDev\Android Part 4\dramatic_outputs\lib\reusable\downloadButton\progress_indicator_widget.dart               | Dart            |         36 |          0 |          4 |         40 |
+| e:\AndroidStudio\AppDev\Android Part 4\dramatic_outputs\lib\reusable\homescreen\caption_text.dart                                | Dart            |        105 |          1 |          8 |        114 |
+| e:\AndroidStudio\AppDev\Android Part 4\dramatic_outputs\lib\reusable\homescreen\home_screen_drawer.dart                          | Dart            |         70 |          0 |          4 |         74 |
+| e:\AndroidStudio\AppDev\Android Part 4\dramatic_outputs\lib\reusable\homescreen\image_picker_column.dart                         | Dart            |         56 |         11 |          8 |         75 |
+| e:\AndroidStudio\AppDev\Android Part 4\dramatic_outputs\lib\reusable\homescreen\image_rounded_rect.dart                          | Dart            |         61 |          2 |          3 |         66 |
+| e:\AndroidStudio\AppDev\Android Part 4\dramatic_outputs\lib\reusable\homescreen\label_picker.dart                                | Dart            |         50 |          0 |          4 |         54 |
+| e:\AndroidStudio\AppDev\Android Part 4\dramatic_outputs\lib\reusable\homescreen\menu_item.dart                                   | Dart            |         31 |          0 |          4 |         35 |
+| e:\AndroidStudio\AppDev\Android Part 4\dramatic_outputs\lib\reusable\levelPicker\three_way_switch_lib.dart                       | Dart            |         61 |          3 |          7 |         71 |
+| e:\AndroidStudio\AppDev\Android Part 4\dramatic_outputs\lib\reusable\output\feedback_button.dart                                 | Dart            |        124 |          9 |         11 |        144 |
+| e:\AndroidStudio\AppDev\Android Part 4\dramatic_outputs\lib\reusable\output\image_view.dart                                      | Dart            |        185 |         18 |         14 |        217 |
+| e:\AndroidStudio\AppDev\Android Part 4\dramatic_outputs\lib\reusable\output\output_image_gallery.dart                            | Dart            |         75 |          0 |          6 |         81 |
+| e:\AndroidStudio\AppDev\Android Part 4\dramatic_outputs\lib\reusable\output\pop_up_form.dart                                     | Dart            |        189 |          6 |          7 |        202 |
+| e:\AndroidStudio\AppDev\Android Part 4\dramatic_outputs\lib\routes\routes.dart                                                   | Dart            |         24 |          0 |          4 |         28 |
+| e:\AndroidStudio\AppDev\Android Part 4\dramatic_outputs\lib\screens\error_screen.dart                                            | Dart            |         20 |          0 |          4 |         24 |
+| e:\AndroidStudio\AppDev\Android Part 4\dramatic_outputs\lib\screens\full_screen_image.dart                                       | Dart            |         26 |          0 |          5 |         31 |
+| e:\AndroidStudio\AppDev\Android Part 4\dramatic_outputs\lib\screens\home_screen.dart                                             | Dart            |        249 |          4 |         12 |        265 |
+| e:\AndroidStudio\AppDev\Android Part 4\dramatic_outputs\lib\screens\onboarding_screen.dart                                       | Dart            |        174 |          7 |         10 |        191 |
+| e:\AndroidStudio\AppDev\Android Part 4\dramatic_outputs\lib\static\static_variables.dart                                         | Dart            |        131 |          0 |          3 |        134 |
+| e:\AndroidStudio\AppDev\Android Part 4\dramatic_outputs\lib\utils\api_functions copy.dart                                        | Dart            |         72 |          9 |         11 |         92 |
+| e:\AndroidStudio\AppDev\Android Part 4\dramatic_outputs\lib\utils\api_functions.dart                                             | Dart            |         72 |          9 |         11 |         92 |
+| e:\AndroidStudio\AppDev\Android Part 4\dramatic_outputs\lib\utils\device_id_manager.dart                                         | Dart            |         14 |          1 |          3 |         18 |
+| e:\AndroidStudio\AppDev\Android Part 4\dramatic_outputs\lib\utils\random_image_request.dart                                      | Dart            |         29 |          2 |          3 |         34 |
+| e:\AndroidStudio\AppDev\Android Part 4\dramatic_outputs\lib\utils\send_request.dart                                              | Dart            |         54 |          1 |         11 |         66 |
+| e:\AndroidStudio\AppDev\Android Part 4\dramatic_outputs\lib\utils\util_functions.dart                                            | Dart            |        117 |         10 |         21 |        148 |
+| e:\AndroidStudio\AppDev\Android Part 4\dramatic_outputs\lib\watermark_demo.dart                                                  | Dart            |        221 |          7 |         14 |        242 |
+| e:\AndroidStudio\AppDev\Android Part 4\dramatic_outputs\linux\flutter\generated_plugin_registrant.cc                             | C++             |         15 |          4 |          5 |         24 |
+| e:\AndroidStudio\AppDev\Android Part 4\dramatic_outputs\linux\flutter\generated_plugin_registrant.h                              | C++             |          5 |          5 |          6 |         16 |
+| e:\AndroidStudio\AppDev\Android Part 4\dramatic_outputs\linux\main.cc                                                            | C++             |          5 |          0 |          2 |          7 |
+| e:\AndroidStudio\AppDev\Android Part 4\dramatic_outputs\linux\my_application.cc                                                  | C++             |         82 |         17 |         26 |        125 |
+| e:\AndroidStudio\AppDev\Android Part 4\dramatic_outputs\linux\my_application.h                                                   | C++             |          7 |          7 |          5 |         19 |
+| e:\AndroidStudio\AppDev\Android Part 4\dramatic_outputs\macos\Flutter\GeneratedPluginRegistrant.swift                            | Swift           |         20 |          3 |          4 |         27 |
+| e:\AndroidStudio\AppDev\Android Part 4\dramatic_outputs\macos\RunnerTests\RunnerTests.swift                                      | Swift           |          7 |          2 |          4 |         13 |
+| e:\AndroidStudio\AppDev\Android Part 4\dramatic_outputs\macos\Runner\AppDelegate.swift                                           | Swift           |          8 |          0 |          2 |         10 |
+| e:\AndroidStudio\AppDev\Android Part 4\dramatic_outputs\macos\Runner\Assets.xcassets\AppIcon.appiconset\Contents.json            | JSON            |         68 |          0 |          1 |         69 |
+| e:\AndroidStudio\AppDev\Android Part 4\dramatic_outputs\macos\Runner\Base.lproj\MainMenu.xib                                     | XML             |        343 |          0 |          1 |        344 |
+| e:\AndroidStudio\AppDev\Android Part 4\dramatic_outputs\macos\Runner\MainFlutterWindow.swift                                     | Swift           |         12 |          0 |          4 |         16 |
+| e:\AndroidStudio\AppDev\Android Part 4\dramatic_outputs\pubspec.yaml                                                             | YAML            |         41 |         57 |         15 |        113 |
+| e:\AndroidStudio\AppDev\Android Part 4\dramatic_outputs\test\widget_test.dart                                                    | Dart            |         14 |         10 |          7 |         31 |
+| e:\AndroidStudio\AppDev\Android Part 4\dramatic_outputs\web\index.html                                                           | HTML            |         19 |         15 |          5 |         39 |
+| e:\AndroidStudio\AppDev\Android Part 4\dramatic_outputs\web\manifest.json                                                        | JSON            |         35 |          0 |          1 |         36 |
+| e:\AndroidStudio\AppDev\Android Part 4\dramatic_outputs\windows\flutter\generated_plugin_registrant.cc                           | C++             |         21 |          4 |          5 |         30 |
+| e:\AndroidStudio\AppDev\Android Part 4\dramatic_outputs\windows\flutter\generated_plugin_registrant.h                            | C++             |          5 |          5 |          6 |         16 |
+| e:\AndroidStudio\AppDev\Android Part 4\dramatic_outputs\windows\runner\flutter_window.cpp                                        | C++             |         49 |          7 |         16 |         72 |
+| e:\AndroidStudio\AppDev\Android Part 4\dramatic_outputs\windows\runner\flutter_window.h                                          | C++             |         20 |          5 |          9 |         34 |
+| e:\AndroidStudio\AppDev\Android Part 4\dramatic_outputs\windows\runner\main.cpp                                                  | C++             |         30 |          4 |         10 |         44 |
+| e:\AndroidStudio\AppDev\Android Part 4\dramatic_outputs\windows\runner\resource.h                                                | C++             |          9 |          6 |          2 |         17 |
+| e:\AndroidStudio\AppDev\Android Part 4\dramatic_outputs\windows\runner\utils.cpp                                                 | C++             |         54 |          2 |         10 |         66 |
+| e:\AndroidStudio\AppDev\Android Part 4\dramatic_outputs\windows\runner\utils.h                                                   | C++             |          8 |          6 |          6 |         20 |
+| e:\AndroidStudio\AppDev\Android Part 4\dramatic_outputs\windows\runner\win32_window.cpp                                          | C++             |        210 |         24 |         55 |        289 |
+| e:\AndroidStudio\AppDev\Android Part 4\dramatic_outputs\windows\runner\win32_window.h                                            | C++             |         48 |         31 |         24 |        103 |
+| Total                                                                                                                            |                 |      4,130 |        430 |        512 |      5,072 |
++----------------------------------------------------------------------------------------------------------------------------------+-----------------+------------+------------+------------+------------+

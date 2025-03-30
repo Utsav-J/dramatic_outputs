@@ -13,8 +13,10 @@ class ImageView extends StatelessWidget {
     super.key,
     required this.imagePath,
     required this.imageData,
+    required this.onReset,
   });
   final Image imagePath;
+  final VoidCallback onReset;
   final Uint8List imageData;
 
   Future<void> handleDownloadImage(BuildContext context) async {
@@ -125,76 +127,94 @@ class ImageView extends StatelessWidget {
         borderRadius: BorderRadius.circular(25),
       ),
       child: Column(
-        mainAxisSize: MainAxisSize.min,
-        // crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Stack(
+          Column(
+            mainAxisSize: MainAxisSize.min,
+            // crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              // Draw the image first so the button appears on top
-              GestureDetector(
-                onTap: () => _showFullScreenImage(context),
-                child: Hero(
-                  tag: imageData,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(25),
-                    child: SizedBox(
-                      height: 300, // Define a fixed height
-                      width: double.infinity, // Use full width
-                      child:
-                          imagePath, // Ensure `imagePath` respects constraints
+              Stack(
+                children: [
+                  // Draw the image first so the button appears on top
+                  GestureDetector(
+                    onTap: () => _showFullScreenImage(context),
+                    child: Hero(
+                      tag: imageData,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(25),
+                        child: SizedBox(
+                          height: 300, // Define a fixed height
+                          width: double.infinity, // Use full width
+                          child:
+                              imagePath, // Ensure `imagePath` respects constraints
+                        ),
+                      ),
                     ),
                   ),
-                ),
-              ),
-              // Then, position the button on top of the image
-              Positioned(
-                bottom: 8,
-                right: 15,
-                child: GestureDetector(
-                  onTap: () {
-                    downloadWatermarkedImage(imageData, context);
-                  },
-                  child: Container(
-                    padding: const EdgeInsets.all(15),
-                    decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.85),
-                      borderRadius: BorderRadius.circular(50),
-                    ),
-                    child: const Icon(
-                      Icons.save_sharp,
-                      size: 24.0,
+                  // Then, position the button on top of the image
+                  Positioned(
+                    bottom: 8,
+                    right: 15,
+                    child: GestureDetector(
+                      onTap: () {
+                        downloadWatermarkedImage(imageData, context);
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.all(15),
+                        decoration: BoxDecoration(
+                          color: Colors.white.withOpacity(0.85),
+                          borderRadius: BorderRadius.circular(50),
+                        ),
+                        child: const Icon(
+                          Icons.save_sharp,
+                          size: 24.0,
+                        ),
+                      ),
                     ),
                   ),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              FeedbackButton(
-                isLike: true,
-                uploadDislikedImage: uploadDislikedImage,
+                ],
               ),
               const SizedBox(
-                height: 30, // Set the height of the divider as needed
-                child: VerticalDivider(
-                  color: Colors.grey, // Set the color of the divider
-                  thickness: 1, // Set the thickness of the divider
-                  width: 20, // Space between the divider and the buttons
-                ),
+                height: 10,
               ),
-              FeedbackButton(
-                isLike: false,
-                uploadDislikedImage: uploadDislikedImage,
-                imageData: imageData,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  FeedbackButton(
+                    isLike: true,
+                    uploadDislikedImage: uploadDislikedImage,
+                  ),
+                  const SizedBox(
+                    height: 30, // Set the height of the divider as needed
+                    child: VerticalDivider(
+                      color: Colors.grey, // Set the color of the divider
+                      thickness: 1, // Set the thickness of the divider
+                      width: 20, // Space between the divider and the buttons
+                    ),
+                  ),
+                  FeedbackButton(
+                    isLike: false,
+                    uploadDislikedImage: uploadDislikedImage,
+                    imageData: imageData,
+                  ),
+                ],
               ),
             ],
-          )
+          ),
+          ElevatedButton(
+            onPressed: onReset,
+            style: const ButtonStyle(
+              backgroundColor: WidgetStatePropertyAll<Color>(
+                Colors.white24,
+              ),
+            ),
+            child: const Text(
+              "New Session",
+              style: TextStyle(
+                color: Colors.white,
+              ),
+            ),
+          ),
         ],
       ),
     );

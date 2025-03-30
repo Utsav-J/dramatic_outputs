@@ -2,8 +2,11 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 
 class ImageRoundedRect extends StatelessWidget {
-  const ImageRoundedRect(
-      {super.key, required this.image, required this.onCheckPressed});
+  const ImageRoundedRect({
+    super.key,
+    required this.image,
+    required this.onCheckPressed,
+  });
   final File? image;
   final VoidCallback onCheckPressed;
 
@@ -35,17 +38,23 @@ class ImageRoundedRect extends StatelessWidget {
               Positioned(
                 bottom: 8,
                 right: 15,
-                child: GestureDetector(
-                  onTap: onCheckPressed,
-                  child: Container(
-                    padding: const EdgeInsets.all(15),
-                    decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.85),
-                      borderRadius: BorderRadius.circular(50),
-                    ),
-                    child: const Icon(
-                      Icons.check,
-                      size: 24.0,
+                child: Ink(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: InkWell(
+                    onTap: onCheckPressed,
+                    child: Container(
+                      padding: const EdgeInsets.all(15),
+                      decoration: BoxDecoration(
+                        color: Colors.black.withOpacity(0.85),
+                        borderRadius: BorderRadius.circular(50),
+                      ),
+                      child: const Icon(
+                        Icons.check,
+                        size: 24.0,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
                 ),

@@ -21,17 +21,6 @@ class ImagePickerColumn extends StatefulWidget {
 class ImagePickerColumnState extends State<ImagePickerColumn> {
   File? _image;
 
-  // Future<void> _pickImage() async {
-  //   final pickedFile =
-  //       await ImagePicker().pickImage(source: ImageSource.gallery);
-
-  //   if (pickedFile != null) {
-  //     setState(() {
-  //       _image = File(pickedFile.path);
-  //     });
-  //     widget.onImageSelected(_image!);
-  //   }
-  // }
 
   Future<void> _pickImage() async {
     if (_image != null) {
