@@ -140,6 +140,14 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
+  Future<void> refreshBackendUrl() async {
+    await ApiFunctions.fetchBackendUrl();
+    setState(() {}); // Update UI (optional)
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text("Backend URL updated!")),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -148,6 +156,17 @@ class _HomeScreenState extends State<HomeScreen> {
             'Dramatic Outputs',
             style: TextStyle(color: Colors.white),
           ),
+          iconTheme: const IconThemeData(color: Colors.white60),
+          actions: [
+            IconButton(
+              icon: const Icon(
+                Icons.refresh,
+                color: Colors.white,
+              ), // Refresh Icon
+              onPressed: refreshBackendUrl, // Call refresh function
+              tooltip: "Refresh Backend URL",
+            ),
+          ],
         ),
         drawer: const HomeScreenDrawer(),
         body: SingleChildScrollView(

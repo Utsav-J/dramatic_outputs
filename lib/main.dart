@@ -3,6 +3,7 @@ import 'package:dramatic_outputs/routes/routes.dart';
 import 'package:dramatic_outputs/screens/home_screen.dart';
 import 'package:dramatic_outputs/screens/onboarding_screen.dart';
 import 'package:dramatic_outputs/static/static_variables.dart';
+import 'package:dramatic_outputs/utils/api_functions.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -23,6 +24,7 @@ void main() async {
         'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imdia2JnbnBjdXZkdm9xamZzb2NiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzg2NTMyNzQsImV4cCI6MjA1NDIyOTI3NH0.v2u0NO8tjK1VP5Zw8E-hCuzD5k7C6335LsuvNgknbiA',
   );
   final prefs = await SharedPreferences.getInstance();
+  await ApiFunctions.fetchBackendUrl();
   isOnboardingDone = prefs.getBool('isOnboardingDone') ?? false;
   runApp(const MyApp());
 }

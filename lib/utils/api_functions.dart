@@ -1,12 +1,26 @@
 import "dart:io";
 import 'dart:convert';
 import 'package:http_parser/http_parser.dart';
+import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:dio/dio.dart';
 
 class ApiFunctions {
-  static String baseUrl = "https://1867-35-187-229-152.ngrok-free.app";
+  static String baseUrl = "https://placeholder.url";
   static String getLabelEndpoint = "/upload-image/";
   static String getImagesEndpoint = "/select-label/";
+
+  static Future<void> fetchBackendUrl() async {
+    final remoteConfig = FirebaseRemoteConfig.instance;
+
+    try {
+      await remoteConfig.fetchAndActivate(); // Fetch latest config
+      baseUrl = remoteConfig.getString("backend_url");
+      print("Updated baseURL: $baseUrl"); // Get URL from Firebase
+    } catch (e) {
+      print("Error fetching backend URL: $e");
+    }
+  }
+
   Dio dio = Dio();
 
   Future<Map<String, dynamic>> getLabelRequest(File imageFile) async {
