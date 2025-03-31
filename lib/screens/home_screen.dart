@@ -11,6 +11,7 @@ import 'package:dramatic_outputs/utils/api_functions.dart';
 import 'package:dramatic_outputs/utils/random_image_request.dart';
 import 'package:dramatic_outputs/utils/util_functions.dart';
 import 'package:flutter/material.dart';
+import 'package:dramatic_outputs/reusable/levelPicker/mode_toggle_button.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -30,6 +31,7 @@ class _HomeScreenState extends State<HomeScreen> {
   File? selectedImage;
   String filename = "";
   String currentLevel = "Medium";
+  bool is300mmMode = false;
   bool isGenerating = false;
   List<String> outputImages = [];
 
@@ -223,15 +225,31 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               IgnorePointer(
                 ignoring: isGenerating,
-                child: ThreeWaySwitch(
-                  onChanged: isGenerating
-                      ? (value) {}
-                      : (value) {
-                          setState(() {
-                            currentLevel = value; // Update the selected level
-                          });
-                          print("Selected Level: $currentLevel");
-                        },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ThreeWaySwitch(
+                      onChanged: isGenerating
+                          ? (value) {}
+                          : (value) {
+                              setState(() {
+                                currentLevel = value;
+                              });
+                              print("Selected Level: $currentLevel");
+                            },
+                    ),
+                    const SizedBox(width: 20.0),
+                    ModeToggleButton(
+                      onChanged: isGenerating
+                          ? (value) {}
+                          : (value) {
+                              setState(() {
+                                is300mmMode = value;
+                              });
+                              print("300mm Mode: $is300mmMode");
+                            },
+                    ),
+                  ],
                 ),
               ),
               const SizedBox(height: 10.0),
