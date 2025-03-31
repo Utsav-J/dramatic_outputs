@@ -13,9 +13,19 @@ class ApiFunctions {
     final remoteConfig = FirebaseRemoteConfig.instance;
 
     try {
-      await remoteConfig.fetchAndActivate(); // Fetch latest config
+      // Set minimum fetch interval to 0 to always fetch fresh values
+      await remoteConfig.setConfigSettings(RemoteConfigSettings(
+        fetchTimeout: const Duration(minutes: 1),
+        minimumFetchInterval: const Duration(
+          milliseconds: 0,
+        ), // Allow fetching every time
+      ));
+
+      // Force a fetch and activate
+      bool updated = await remoteConfig.fetchAndActivate();
       baseUrl = remoteConfig.getString("backend_url");
-      print("Updated baseURL: $baseUrl"); // Get URL from Firebase
+      print("Config fetch status: $updated");
+      print("Updated baseURL: $baseUrl");
     } catch (e) {
       print("Error fetching backend URL: $e");
     }

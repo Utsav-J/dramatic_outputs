@@ -2,7 +2,6 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'package:dramatic_outputs/reusable/homescreen/caption_text.dart';
 import 'package:dramatic_outputs/reusable/homescreen/image_picker_column.dart';
-import 'package:dramatic_outputs/reusable/levelPicker/three_way_switch_lib.dart';
 import 'package:dramatic_outputs/reusable/output/image_view.dart';
 import 'package:dramatic_outputs/reusable/homescreen/home_screen_drawer.dart';
 import 'package:dramatic_outputs/reusable/homescreen/label_picker.dart';
@@ -11,7 +10,7 @@ import 'package:dramatic_outputs/utils/api_functions.dart';
 import 'package:dramatic_outputs/utils/random_image_request.dart';
 import 'package:dramatic_outputs/utils/util_functions.dart';
 import 'package:flutter/material.dart';
-import 'package:dramatic_outputs/reusable/levelPicker/mode_toggle_button.dart';
+import 'package:dramatic_outputs/reusable/levelPicker/toggle_switches_row.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -215,43 +214,33 @@ class _HomeScreenState extends State<HomeScreen> {
                       color: const Color.fromARGB(255, 47, 129, 100),
                       borderRadius: BorderRadius.circular(25),
                     )
-                  : LabelPicker(
-                      labelsWithIndices: extractedLabelsWithIndices,
-                      onLabelTap: handleLabelTap, // Disable if generating,
-                      currentFilename: filename,
-                    ),
-              const SizedBox(
-                height: 5.0,
-              ),
-              IgnorePointer(
-                ignoring: isGenerating,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    ThreeWaySwitch(
-                      onChanged: isGenerating
-                          ? (value) {}
-                          : (value) {
+                  : Column(
+                      children: [
+                        LabelPicker(
+                          labelsWithIndices: extractedLabelsWithIndices,
+                          onLabelTap: handleLabelTap,
+                          currentFilename: filename,
+                        ),
+                        if (extractedLabelsWithIndices.isNotEmpty) ...[
+                          const SizedBox(height: 10.0),
+                          ToggleSwitchesRow(
+                            onLevelChanged: (value) {
                               setState(() {
                                 currentLevel = value;
                               });
                               print("Selected Level: $currentLevel");
                             },
-                    ),
-                    const SizedBox(width: 20.0),
-                    ModeToggleButton(
-                      onChanged: isGenerating
-                          ? (value) {}
-                          : (value) {
+                            onModeChanged: (value) {
                               setState(() {
                                 is300mmMode = value;
                               });
                               print("300mm Mode: $is300mmMode");
                             },
+                            isGenerating: isGenerating,
+                          ),
+                        ],
+                      ],
                     ),
-                  ],
-                ),
-              ),
               const SizedBox(height: 10.0),
               response.isEmpty
                   ? const SizedBox()
